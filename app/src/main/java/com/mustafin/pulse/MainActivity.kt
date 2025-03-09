@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.mustafin.navigation.presentation.MainNavGraph
 import com.mustafin.pulse.ui.themes.AppTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,7 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge(statusBarStyle = SystemBarStyle.auto(0, 0))
         setContent {
             AppTheme {
-                
+                MainNavGraph()
             }
         }
     }

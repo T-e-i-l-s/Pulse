@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Pulse"
 include(":app")
- 
+include(":navigation")

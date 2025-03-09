@@ -10,9 +10,9 @@ import com.mustafin.pulse.R
 
 val Typography = Typography(
     displayLarge = TextStyle(
-        fontSize = 28.sp,
+        fontSize = 26.sp,
         fontFamily = FontFamily(Font(R.font.geologica)),
-        fontWeight = FontWeight.Black
+        fontWeight = FontWeight.Bold
     ),
     titleLarge = TextStyle(
         fontSize = 24.sp,

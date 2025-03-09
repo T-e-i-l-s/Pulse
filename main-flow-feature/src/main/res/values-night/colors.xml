@@ -5,4 +5,7 @@
     <color name="secondary_background">#161616</color>
     <color name="ternary_background">#282828</color>
     <color name="content">#FFFFFF</color>
+
+    <!-- Additional Colors -->
+    <color name="gray">#B1B1B1</color>
 </resources>

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Main Colors -->
-    <color name="background">#DCDCDC</color>
+    <color name="background">#E2E2E2</color>
     <color name="secondary_background">#E9E9E9</color>
     <color name="ternary_background">#FFFFFF</color>
     <color name="content">#000000</color>
 
     <!-- Additional Colors -->
-    <color name="red">#F23737</color>
-    <color name="green">#37F26C</color>
-    <color name="yellow">#F2C937</color>
+    <color name="red">#CE0700</color>
+    <color name="green">#008C45</color>
+    <color name="yellow">#A97700</color>
     <color name="purple">#4337F2</color>
+    <color name="gray">#4D4D4D</color>
 </resources>

@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "Pulse"
 include(":app")
 include(":navigation")
+include(":main-flow-feature")

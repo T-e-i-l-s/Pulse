@@ -2,4 +2,5 @@
 <resources>
 
     <style name="Theme.Pulse" parent="Theme.MaterialComponents.DayNight.NoActionBar"/>
+
 </resources>

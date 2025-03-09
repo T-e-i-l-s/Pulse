@@ -1,0 +1,143 @@
+kotlin version: 2.1.0
+error message: org.jetbrains.kotlin.backend.common.BackendException: Backend Internal error: Exception during IR lowering
+File being compiled: C:/Users/kmous/Development/MyProjects/Pulse/main-flow-feature/src/main/java/com/mustafin/main_flow_feature/presentation/screens/homeScreen/HomeScreenView.kt
+The root cause java.lang.RuntimeException was thrown at: org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:48)
+	at org.jetbrains.kotlin.backend.common.CodegenUtil.reportBackendException(CodegenUtil.kt:253)
+	at org.jetbrains.kotlin.backend.common.CodegenUtil.reportBackendException$default(CodegenUtil.kt:236)
+	at org.jetbrains.kotlin.backend.common.phaser.PerformByIrFilePhase.invokeSequential(performByIrFile.kt:55)
+	at org.jetbrains.kotlin.backend.common.phaser.PerformByIrFilePhase.invoke(performByIrFile.kt:42)
+	at org.jetbrains.kotlin.backend.common.phaser.PerformByIrFilePhase.invoke(performByIrFile.kt:28)
+	at org.jetbrains.kotlin.backend.common.phaser.NamedCompilerPhase.phaseBody(CompilerPhase.kt:166)
+	at org.jetbrains.kotlin.backend.common.phaser.AbstractNamedCompilerPhase.invoke(CompilerPhase.kt:113)
+	at org.jetbrains.kotlin.backend.common.phaser.CompositePhase.invoke(PhaseBuilders.kt:27)
+	at org.jetbrains.kotlin.backend.common.phaser.CompositePhase.invoke(PhaseBuilders.kt:14)
+	at org.jetbrains.kotlin.backend.common.phaser.NamedCompilerPhase.phaseBody(CompilerPhase.kt:166)
+	at org.jetbrains.kotlin.backend.common.phaser.AbstractNamedCompilerPhase.invoke(CompilerPhase.kt:113)
+	at org.jetbrains.kotlin.backend.common.phaser.CompilerPhaseKt.invokeToplevel(CompilerPhase.kt:62)
+	at org.jetbrains.kotlin.backend.jvm.JvmIrCodegenFactory.invokeCodegen(JvmIrCodegenFactory.kt:371)
+	at org.jetbrains.kotlin.codegen.CodegenFactory.generateModule(CodegenFactory.kt:47)
+	at org.jetbrains.kotlin.backend.jvm.JvmIrCodegenFactory.generateModuleInFrontendIRMode(JvmIrCodegenFactory.kt:433)
+	at org.jetbrains.kotlin.cli.jvm.compiler.pipeline.JvmCompilerPipelineKt.generateCodeFromIr(jvmCompilerPipeline.kt:192)
+	at org.jetbrains.kotlin.cli.jvm.compiler.pipeline.JvmCompilerPipelineKt.runBackend(jvmCompilerPipeline.kt:80)
+	at org.jetbrains.kotlin.cli.jvm.compiler.pipeline.JvmCompilerPipelineLightTreeKt.compileModule(jvmCompilerPipelineLightTree.kt:264)
+	at org.jetbrains.kotlin.cli.jvm.compiler.pipeline.JvmCompilerPipelineLightTreeKt.compileSingleModuleUsingFrontendIrAndLightTree(jvmCompilerPipelineLightTree.kt:231)
+	at org.jetbrains.kotlin.cli.jvm.compiler.pipeline.JvmCompilerPipelineLightTreeKt.compileModulesUsingFrontendIrAndLightTree(jvmCompilerPipelineLightTree.kt:86)
+	at org.jetbrains.kotlin.cli.jvm.K2JVMCompiler.doExecute(K2JVMCompiler.kt:146)
+	at org.jetbrains.kotlin.cli.jvm.K2JVMCompiler.doExecute(K2JVMCompiler.kt:43)
+	at org.jetbrains.kotlin.cli.common.CLICompiler.execImpl(CLICompiler.kt:102)
+	at org.jetbrains.kotlin.cli.common.CLICompiler.exec(CLICompiler.kt:316)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunner.runCompiler(IncrementalJvmCompilerRunner.kt:464)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunner.runCompiler(IncrementalJvmCompilerRunner.kt:73)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.doCompile(IncrementalCompilerRunner.kt:506)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compileImpl(IncrementalCompilerRunner.kt:423)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compileNonIncrementally(IncrementalCompilerRunner.kt:301)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compile(IncrementalCompilerRunner.kt:129)
+	at org.jetbrains.kotlin.daemon.CompileServiceImplBase.execIncrementalCompiler(CompileServiceImpl.kt:674)
+	at org.jetbrains.kotlin.daemon.CompileServiceImplBase.access$execIncrementalCompiler(CompileServiceImpl.kt:91)
+	at org.jetbrains.kotlin.daemon.CompileServiceImpl.compile(CompileServiceImpl.kt:1659)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:360)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:200)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:197)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:712)
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:587)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:828)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:705)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:704)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.lang.RuntimeException: Exception while generating code for:
+FUN FUNCTION_FOR_DEFAULT_PARAMETER name:HomeScreenView$default visibility:public modality:FINAL <> (viewModel:com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewModel?, $mask0:kotlin.Int, $handler:kotlin.Any?) returnType:kotlin.Unit
+  annotations:
+    Composable
+  VALUE_PARAMETER name:viewModel index:0 type:com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewModel? [assignable]
+    EXPRESSION_BODY
+      ERROR_EXPR 'Default Stub' type=com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewModel
+  VALUE_PARAMETER MASK_FOR_DEFAULT_FUNCTION name:$mask0 index:1 type:kotlin.Int
+  VALUE_PARAMETER METHOD_HANDLER_IN_DEFAULT_FUNCTION name:$handler index:2 type:kotlin.Any?
+  BLOCK_BODY
+    WHEN type=kotlin.Unit origin=null
+      BRANCH
+        if: CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+          $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+            arg0: CALL 'public final fun and (other: kotlin.Int): kotlin.Int [infix] declared in kotlin.Int' type=kotlin.Int origin=null
+              $this: GET_VAR '$mask0: kotlin.Int declared in com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewKt.HomeScreenView$default' type=kotlin.Int origin=null
+              other: CONST Int type=kotlin.Int value=1
+            arg1: CONST Int type=kotlin.Int value=0
+        then: SET_VAR 'viewModel: com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewModel? [assignable] declared in com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewKt.HomeScreenView$default' type=kotlin.Unit origin=EQ
+          TYPE_OP type=com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewModel origin=IMPLICIT_CAST typeOperand=com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewModel
+            CALL 'public final fun koinViewModel$default <T> (qualifier: org.koin.core.qualifier.Qualifier?, viewModelStoreOwner: androidx.lifecycle.ViewModelStoreOwner?, key: kotlin.String?, extras: androidx.lifecycle.viewmodel.CreationExtras?, scope: org.koin.core.scope.Scope?, parameters: kotlin.Function0<org.koin.core.parameter.ParametersHolder>?, $mask0: kotlin.Int, $handler: kotlin.Any?): T of org.koin.androidx.compose.ViewModelKt.koinViewModel$default [inline] declared in org.koin.androidx.compose.ViewModelKt' type=T of org.koin.androidx.compose.ViewModelKt.koinViewModel$default origin=DEFAULT_DISPATCH_CALL
+              <T>: com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewModel
+              qualifier: COMPOSITE type=org.koin.core.qualifier.Qualifier? origin=DEFAULT_VALUE
+                CONST Null type=org.koin.core.qualifier.Qualifier? value=null
+              viewModelStoreOwner: COMPOSITE type=androidx.lifecycle.ViewModelStoreOwner? origin=DEFAULT_VALUE
+                CONST Null type=androidx.lifecycle.ViewModelStoreOwner? value=null
+              key: COMPOSITE type=kotlin.String? origin=DEFAULT_VALUE
+                CONST Null type=kotlin.String? value=null
+              extras: COMPOSITE type=androidx.lifecycle.viewmodel.CreationExtras? origin=DEFAULT_VALUE
+                CONST Null type=androidx.lifecycle.viewmodel.CreationExtras? value=null
+              scope: COMPOSITE type=org.koin.core.scope.Scope? origin=DEFAULT_VALUE
+                CONST Null type=org.koin.core.scope.Scope? value=null
+              parameters: COMPOSITE type=kotlin.Function0<org.koin.core.parameter.ParametersHolder>? origin=DEFAULT_VALUE
+                CONST Null type=kotlin.Function0<org.koin.core.parameter.ParametersHolder>? value=null
+              $mask0: CONST Int type=kotlin.Int value=63
+              $handler: CONST Null type=kotlin.Any? value=null
+    RETURN type=kotlin.Nothing from='public final fun HomeScreenView$default (viewModel: com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewModel?, $mask0: kotlin.Int, $handler: kotlin.Any?): kotlin.Unit declared in com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewKt'
+      CALL 'public final fun HomeScreenView (viewModel: com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewModel): kotlin.Unit declared in com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewKt' type=kotlin.Unit origin=DEFAULT_STUB_CALL_TO_IMPLEMENTATION
+        viewModel: TYPE_OP type=com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewModel origin=IMPLICIT_CAST typeOperand=com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewModel
+          GET_VAR 'viewModel: com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewModel? [assignable] declared in com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewKt.HomeScreenView$default' type=com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenViewModel? origin=null
+
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:48)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate$default(FunctionCodegen.kt:41)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generateMethodNode(ClassCodegen.kt:407)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generateMethod(ClassCodegen.kt:424)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generate(ClassCodegen.kt:169)
+	at org.jetbrains.kotlin.backend.jvm.FileCodegen.lower(JvmPhases.kt:39)
+	at org.jetbrains.kotlin.backend.common.phaser.PhaseFactoriesKt.createFilePhase$lambda$4(PhaseFactories.kt:71)
+	at org.jetbrains.kotlin.backend.common.phaser.PhaseBuildersKt$createSimpleNamedCompilerPhase$1.phaseBody(PhaseBuilders.kt:69)
+	at org.jetbrains.kotlin.backend.common.phaser.SimpleNamedCompilerPhase.phaseBody(CompilerPhase.kt:226)
+	at org.jetbrains.kotlin.backend.common.phaser.AbstractNamedCompilerPhase.invoke(CompilerPhase.kt:113)
+	at org.jetbrains.kotlin.backend.common.phaser.PerformByIrFilePhase.invokeSequential(performByIrFile.kt:52)
+	... 47 more
+Caused by: org.jetbrains.kotlin.codegen.CompilationException: Back-end (JVM) Internal error: Couldn't inline method call: CALL 'public final fun koinViewModel$default <T> (qualifier: org.koin.core.qualifier.Qualifier?, viewModelStoreOwner: androidx.lifecycle.ViewModelStoreOwner?, key: kotlin.String?, extras: androidx.lifecycle.viewmodel.CreationExtras?, scope: org.koin.core.scope.Scope?, parameters: kotlin.Function0<org.koin.core.parameter.ParametersHolder>?, $mask0: kotlin.Int, $handler: kotlin.Any?): T of org.koin.androidx.compose.ViewModelKt.koinViewModel$default [inline] declared in org.koin.androidx.compose.ViewModelKt' type=T of org.koin.androidx.compose.ViewModelKt.koinViewModel$default origin=DEFAULT_DISPATCH_CALL
+Method: null
+File is unknown
+The root cause java.lang.IllegalStateException was thrown at: org.jetbrains.kotlin.codegen.inline.SourceCompilerForInlineKt.getMethodNode(SourceCompilerForInline.kt:118)
+	at org.jetbrains.kotlin.codegen.inline.InlineCodegen.performInline(InlineCodegen.kt:65)
+	at org.jetbrains.kotlin.backend.jvm.codegen.IrInlineCodegen.genInlineCall(IrInlineCodegen.kt:163)
+	at org.jetbrains.kotlin.backend.jvm.codegen.IrInlineCallGenerator.genCall(IrInlineCallGenerator.kt:36)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall(ExpressionCodegen.kt:598)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall(ExpressionCodegen.kt:134)
+	at org.jetbrains.kotlin.ir.expressions.IrCall.accept(IrCall.kt:24)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitTypeOperator(ExpressionCodegen.kt:1076)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitTypeOperator(ExpressionCodegen.kt:134)
+	at org.jetbrains.kotlin.ir.expressions.IrTypeOperatorCall.accept(IrTypeOperatorCall.kt:26)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitSetValue(ExpressionCodegen.kt:887)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitSetValue(ExpressionCodegen.kt:134)
+	at org.jetbrains.kotlin.ir.expressions.IrSetValue.accept(IrSetValue.kt:21)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitWhen(ExpressionCodegen.kt:1050)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitWhen(ExpressionCodegen.kt:134)
+	at org.jetbrains.kotlin.ir.expressions.IrWhen.accept(IrWhen.kt:24)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitStatementContainer(ExpressionCodegen.kt:524)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:529)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:134)
+	at org.jetbrains.kotlin.ir.expressions.IrBlockBody.accept(IrBlockBody.kt:20)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.generate(ExpressionCodegen.kt:236)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.doGenerate(FunctionCodegen.kt:124)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:45)
+	... 57 more
+Caused by: java.lang.IllegalStateException: couldn't find inline method Lorg/koin/androidx/compose/ViewModelKt;.koinViewModel$default(Lorg/koin/core/qualifier/Qualifier;Landroidx/lifecycle/ViewModelStoreOwner;Ljava/lang/String;Landroidx/lifecycle/viewmodel/CreationExtras;Lorg/koin/core/scope/Scope;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Landroidx/lifecycle/ViewModel;
+	at org.jetbrains.kotlin.codegen.inline.SourceCompilerForInlineKt.getMethodNode(SourceCompilerForInline.kt:118)
+	at org.jetbrains.kotlin.codegen.inline.SourceCompilerForInlineKt.loadCompiledInlineFunction(SourceCompilerForInline.kt:96)
+	at org.jetbrains.kotlin.backend.jvm.codegen.IrSourceCompilerForInline.compileInlineFunction(IrSourceCompilerForInline.kt:91)
+	at org.jetbrains.kotlin.codegen.inline.InlineCodegen.compileInline(InlineCodegen.kt:43)
+	at org.jetbrains.kotlin.codegen.inline.InlineCodegen.performInline(InlineCodegen.kt:51)
+	... 78 more
+
+

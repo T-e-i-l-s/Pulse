@@ -6,6 +6,10 @@ import com.mustafin.main_flow_feature.utils.requests.ResponseStatusModel
 import kotlinx.coroutines.delay
 import java.time.LocalDateTime
 
+/*
+Repository that provides requests created by user
+!!! Mocked DATA
+*/
 class RequestsRepositoryImpl : RequestsRepository {
     private val mockedRequestsList = listOf(
         RequestModel(

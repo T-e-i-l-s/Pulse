@@ -1,0 +1,120 @@
+package com.mustafin.main_flow_feature.presentation.screens.addRequestScreen
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.mustafin.main_flow_feature.R
+import com.mustafin.main_flow_feature.presentation.screens.addRequestScreen.views.requestMethodSelector.RequestMethodSelectorView
+import com.mustafin.ui_components.presentation.buttons.CustomButton
+import com.mustafin.ui_components.presentation.inputs.CustomTextField
+import com.mustafin.ui_components.presentation.inputs.FullWidthTextField
+
+/* Composable of create new request screen */
+@Composable
+fun AddRequestScreenView(popBackNavigationStack: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(id = R.color.background))
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .statusBarsPadding()
+                .padding(bottom = 100.dp)
+        ) {
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Row(
+                Modifier.padding(horizontal = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = popBackNavigationStack) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.arrow_left),
+                        contentDescription = null,
+                        modifier = Modifier.size(28.dp)
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(12.dp))
+
+                Text(
+                    text = stringResource(id = R.string.add_request_screen_title),
+                    color = colorResource(id = com.mustafin.ui_components.R.color.gray),
+                    style = MaterialTheme.typography.displayLarge
+                )
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            RequestMethodSelectorView()
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            CustomTextField(
+                value = "",
+                onValueChange = {},
+                placeholder = stringResource(id = R.string.url_text_field_placeholder),
+                modifier = Modifier
+                    .padding(horizontal = 12.dp)
+                    .fillMaxWidth()
+            )
+
+            FullWidthTextField(
+                value = "",
+                onValueChange = {},
+                placeholder = stringResource(id = R.string.title_of_request_input_placeholder),
+                singleLine = true,
+                textStyle = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            FullWidthTextField(
+                value = "",
+                onValueChange = {},
+                placeholder = stringResource(id = R.string.description_of_request_input_placeholder),
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
+        Row(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .navigationBarsPadding()
+                .padding(12.dp)
+        ) {
+            CustomButton(
+                text = stringResource(id = R.string.add_request_button_text),
+                onClick = { /*TODO*/ },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+    }
+}

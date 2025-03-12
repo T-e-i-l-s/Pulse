@@ -31,9 +31,17 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
 }
 
 dependencies {
+    implementation(project(":ui-components"))
+
     // Koin DI
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)

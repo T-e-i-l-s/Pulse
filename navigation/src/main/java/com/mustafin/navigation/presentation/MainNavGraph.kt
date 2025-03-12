@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.mustafin.main_flow_feature.presentation.screens.addRequestScreen.AddRequestScreenView
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.HomeScreenView
 
 /* Main navigation graph */
@@ -12,7 +13,11 @@ fun MainNavGraph() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Destinations.HomeScreen) {
         composable<Destinations.HomeScreen> {
-            HomeScreenView()
+            HomeScreenView(navigateToAddRequestScreen = { navController.navigate(Destinations.AddRequestScreen) })
+        }
+
+        composable<Destinations.AddRequestScreen> {
+            AddRequestScreenView(popBackNavigationStack = { navController.popBackStack() })
         }
     }
 }

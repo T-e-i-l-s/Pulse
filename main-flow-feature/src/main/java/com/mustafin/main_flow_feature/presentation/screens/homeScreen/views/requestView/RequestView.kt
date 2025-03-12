@@ -32,7 +32,7 @@ fun RequestView(request: RequestModel) {
     Column(
         modifier = Modifier
             .padding(horizontal = 12.dp)
-            .clip(RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(16.dp))
             .background(colorResource(id = R.color.secondary_background))
             .padding(12.dp)
     ) {

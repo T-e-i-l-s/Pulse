@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Home Screen -->
-    <string name="all_requests">All requests</string>
+    <string name="all_requests_title">All requests</string>
+    <string name="new_request_button_text">New</string>
+
+    <!-- Add Request Screen -->
+    <string name="add_request_screen_title">New request</string>
+    <string name="url_text_field_placeholder">url</string>
+    <string name="title_of_request_input_placeholder">Title</string>
+    <string name="description_of_request_input_placeholder">Description</string>
+    <string name="add_request_button_text">Create</string>
 </resources>

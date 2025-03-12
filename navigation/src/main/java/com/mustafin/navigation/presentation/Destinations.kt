@@ -6,4 +6,7 @@ import kotlinx.serialization.Serializable
 object Destinations {
     @Serializable
     object HomeScreen
+
+    @Serializable
+    object AddRequestScreen
 }

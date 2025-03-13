@@ -14,7 +14,7 @@ class RequestsRepositoryImpl : RequestsRepository {
     private val mockedRequestsList = listOf(
         RequestModel(
             id = 1,
-            name = "Schedule Api",
+            title = "Schedule Api",
             description = "Api with my daily schedule",
             url = "https://myshedule.org/api/v1",
             requestMethod = RequestMethod.GET,
@@ -26,7 +26,7 @@ class RequestsRepositoryImpl : RequestsRepository {
         ),
         RequestModel(
             id = 2,
-            name = "Reader App Web Site",
+            title = "Reader App Web Site",
             description = "Landing of my startup",
             url = "https://reader-app.ru",
             requestMethod = RequestMethod.POST,
@@ -38,7 +38,7 @@ class RequestsRepositoryImpl : RequestsRepository {
         ),
         RequestModel(
             id = 3,
-            name = "My web site",
+            title = "My web site",
             description = "Web site with information about me",
             url = "https://mustafin.online/",
             requestMethod = RequestMethod.DELETE,
@@ -50,7 +50,7 @@ class RequestsRepositoryImpl : RequestsRepository {
         ),
         RequestModel(
             id = 4,
-            name = "Example API",
+            title = "Example API",
             description = "API that provides information about products",
             url = "https://exampleapi.com/products",
             requestMethod = RequestMethod.PUT,
@@ -62,7 +62,7 @@ class RequestsRepositoryImpl : RequestsRepository {
         ),
         RequestModel(
             id = 5,
-            name = "User Service",
+            title = "User Service",
             description = "Service for managing user accounts",
             url = "https://userservice.com/account",
             requestMethod = RequestMethod.PATCH,
@@ -80,7 +80,7 @@ class RequestsRepositoryImpl : RequestsRepository {
     }
 
     override suspend fun addRequest(request: RequestModel) {
-        
+
     }
 
     override suspend fun deleteRequest(requestId: Int) {

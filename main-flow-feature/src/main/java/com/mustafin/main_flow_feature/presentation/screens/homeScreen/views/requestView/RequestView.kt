@@ -49,7 +49,7 @@ fun RequestView(request: RequestModel) {
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            text = request.name,
+            text = request.title,
             style = MaterialTheme.typography.titleMedium,
             color = colorResource(id = R.color.content)
         )
@@ -86,7 +86,7 @@ private fun Preview() {
     RequestView(
         request = RequestModel(
             id = 1,
-            name = "Schedule Api",
+            title = "Schedule Api",
             description = "Api with my daily schedule",
             url = "https://myshedule.org/api/v1",
             requestMethod = RequestMethod.GET,

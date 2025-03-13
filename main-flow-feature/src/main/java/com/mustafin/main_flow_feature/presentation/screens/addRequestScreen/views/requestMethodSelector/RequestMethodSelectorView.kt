@@ -12,7 +12,10 @@ import com.mustafin.main_flow_feature.utils.requests.RequestMethod
 
 /* Composable with request method selector */
 @Composable
-fun RequestMethodSelectorView() {
+fun RequestMethodSelectorView(
+    selectedMethod: RequestMethod?,
+    toggleIsSelected: (RequestMethod) -> Unit
+) {
     val methods = listOf(
         RequestMethod.GET,
         RequestMethod.POST,
@@ -26,8 +29,12 @@ fun RequestMethodSelectorView() {
         contentPadding = PaddingValues(12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(methods) {
-            RequestMethodSelectorItem(requestMethod = it)
+        items(methods) { method ->
+            RequestMethodSelectorItem(
+                requestMethod = method,
+                isSelected = method == selectedMethod,
+                onClick = { toggleIsSelected(method) }
+            )
         }
     }
 }

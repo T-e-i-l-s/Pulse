@@ -26,15 +26,26 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mustafin.main_flow_feature.R
 import com.mustafin.main_flow_feature.presentation.screens.addRequestScreen.views.requestMethodSelector.RequestMethodSelectorView
 import com.mustafin.ui_components.presentation.buttons.CustomButton
 import com.mustafin.ui_components.presentation.inputs.CustomTextField
 import com.mustafin.ui_components.presentation.inputs.FullWidthTextField
+import org.koin.androidx.compose.koinViewModel
 
 /* Composable of create new request screen */
 @Composable
-fun AddRequestScreenView(popBackNavigationStack: () -> Unit) {
+fun AddRequestScreenView(
+    popBackNavigationStack: () -> Unit,
+    viewModel: AddRequestScreenViewModel = koinViewModel()
+) {
+    val isCreationEnabled = viewModel.isCreationEnabled.collectAsStateWithLifecycle()
+    val selectedRequestMethod = viewModel.selectedRequestMethod.collectAsStateWithLifecycle()
+    val requestUrl = viewModel.requestUrl.collectAsStateWithLifecycle()
+    val title = viewModel.title.collectAsStateWithLifecycle()
+    val description = viewModel.description.collectAsStateWithLifecycle()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -47,7 +58,6 @@ fun AddRequestScreenView(popBackNavigationStack: () -> Unit) {
                 .statusBarsPadding()
                 .padding(bottom = 100.dp)
         ) {
-
             Spacer(modifier = Modifier.height(12.dp))
 
             Row(
@@ -73,13 +83,16 @@ fun AddRequestScreenView(popBackNavigationStack: () -> Unit) {
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            RequestMethodSelectorView()
+            RequestMethodSelectorView(
+                selectedMethod = selectedRequestMethod.value,
+                toggleIsSelected = viewModel::selectRequestMethod
+            )
 
             Spacer(modifier = Modifier.height(12.dp))
 
             CustomTextField(
-                value = "",
-                onValueChange = {},
+                value = requestUrl.value,
+                onValueChange = viewModel::setRequestUrl,
                 placeholder = stringResource(id = R.string.url_text_field_placeholder),
                 modifier = Modifier
                     .padding(horizontal = 12.dp)
@@ -87,8 +100,8 @@ fun AddRequestScreenView(popBackNavigationStack: () -> Unit) {
             )
 
             FullWidthTextField(
-                value = "",
-                onValueChange = {},
+                value = title.value,
+                onValueChange = viewModel::setTitle,
                 placeholder = stringResource(id = R.string.title_of_request_input_placeholder),
                 singleLine = true,
                 textStyle = MaterialTheme.typography.titleLarge,
@@ -96,8 +109,8 @@ fun AddRequestScreenView(popBackNavigationStack: () -> Unit) {
             )
 
             FullWidthTextField(
-                value = "",
-                onValueChange = {},
+                value = description.value,
+                onValueChange = viewModel::setDescription,
                 placeholder = stringResource(id = R.string.description_of_request_input_placeholder),
                 modifier = Modifier.fillMaxWidth()
             )
@@ -112,7 +125,8 @@ fun AddRequestScreenView(popBackNavigationStack: () -> Unit) {
         ) {
             CustomButton(
                 text = stringResource(id = R.string.add_request_button_text),
-                onClick = { /*TODO*/ },
+                onClick = viewModel::createRequest,
+                enabled = isCreationEnabled.value,
                 modifier = Modifier.fillMaxWidth()
             )
         }

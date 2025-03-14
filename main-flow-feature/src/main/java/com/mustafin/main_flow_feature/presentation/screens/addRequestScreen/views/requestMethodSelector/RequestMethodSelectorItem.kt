@@ -31,7 +31,7 @@ fun RequestMethodSelectorItem(
     Row(
         modifier = Modifier
             .clip(RoundedCornerShape(12.dp))
-            .background(colorResource(requestMethod.colorRes).copy(if (isSelected) 0.1f else 0.02f))
+            .background(colorResource(requestMethod.colorRes).copy(if (isSelected) 0.3f else 0.1f))
             .clickable(onClick = onClick)
             .animateContentSize()
             .padding(horizontal = 8.dp, vertical = 4.dp)

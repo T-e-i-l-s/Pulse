@@ -6,7 +6,7 @@
 
     <!-- Add Request Screen -->
     <string name="add_request_screen_title">New request</string>
-    <string name="url_text_field_placeholder">url</string>
+    <string name="url_text_field_placeholder">https://</string>
     <string name="title_of_request_input_placeholder">Title</string>
     <string name="description_of_request_input_placeholder">Description</string>
     <string name="add_request_button_text">Create</string>

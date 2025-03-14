@@ -68,7 +68,8 @@ fun AddRequestScreenView(
                     Icon(
                         painter = painterResource(id = R.drawable.arrow_left),
                         contentDescription = null,
-                        modifier = Modifier.size(28.dp)
+                        modifier = Modifier.size(28.dp),
+                        tint = colorResource(id = R.color.content)
                     )
                 }
 
@@ -76,7 +77,7 @@ fun AddRequestScreenView(
 
                 Text(
                     text = stringResource(id = R.string.add_request_screen_title),
-                    color = colorResource(id = com.mustafin.ui_components.R.color.gray),
+                    color = colorResource(id = R.color.content),
                     style = MaterialTheme.typography.displayLarge
                 )
             }

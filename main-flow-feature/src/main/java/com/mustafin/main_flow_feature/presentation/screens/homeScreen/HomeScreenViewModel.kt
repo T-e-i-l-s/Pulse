@@ -2,7 +2,7 @@ package com.mustafin.main_flow_feature.presentation.screens.homeScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mustafin.main_flow_feature.data.repositories.requestsRepository.RequestsRepository
+import com.mustafin.main_flow_feature.data.repositories.requestsRepository.RequestsRepositoryImpl
 import com.mustafin.main_flow_feature.utils.loading.LoadingState
 import com.mustafin.main_flow_feature.utils.requests.RequestModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 /* View model of home screen */
 class HomeScreenViewModel(
-    private val requestsRepository: RequestsRepository
+    private val requestsRepository: RequestsRepositoryImpl
 ) : ViewModel() {
     private val _loadingState = MutableStateFlow(LoadingState.LOADING)
     val loadingState: StateFlow<LoadingState> = _loadingState

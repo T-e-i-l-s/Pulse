@@ -1,5 +1,6 @@
 package com.mustafin.main_flow_feature.data.repositories.requestsRepository
 
+import com.mustafin.main_flow_feature.data.source.local.requestsSource.RequestsDao
 import com.mustafin.main_flow_feature.utils.requests.RequestMethod
 import com.mustafin.main_flow_feature.utils.requests.RequestModel
 import com.mustafin.main_flow_feature.utils.requests.ResponseStatusModel
@@ -10,7 +11,10 @@ import java.time.LocalDateTime
 Repository that provides requests created by user
 !!! Mocked DATA
 */
-class RequestsRepositoryImpl : RequestsRepository {
+class RequestsRepositoryImpl(
+    private val requestsDao: RequestsDao
+) : RequestsRepository {
+
     private val mockedRequestsList = listOf(
         RequestModel(
             id = 1,

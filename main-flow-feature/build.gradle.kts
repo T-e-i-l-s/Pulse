@@ -1,4 +1,5 @@
 plugins {
+    id("com.google.devtools.ksp")
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -41,6 +42,13 @@ android {
 
 dependencies {
     implementation(project(":ui-components"))
+
+    // Gson
+    implementation(libs.gson)
+
+    // Room
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     // Koin DI
     implementation(libs.koin.android)

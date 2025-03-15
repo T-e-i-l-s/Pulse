@@ -31,6 +31,7 @@ import java.time.LocalDateTime
 fun RequestView(request: RequestModel) {
     Column(
         modifier = Modifier
+            .fillMaxWidth()
             .padding(horizontal = 12.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(colorResource(id = R.color.secondary_background))
@@ -44,9 +45,9 @@ fun RequestView(request: RequestModel) {
             ) {
                 ResponseStatusView(responseStatusSafe)
             }
+            
+            Spacer(modifier = Modifier.height(12.dp))
         }
-
-        Spacer(modifier = Modifier.height(12.dp))
 
         Text(
             text = request.title,

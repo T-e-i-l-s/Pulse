@@ -37,9 +37,11 @@ import org.koin.androidx.compose.koinViewModel
 /* Composable of create new request screen */
 @Composable
 fun AddRequestScreenView(
+    navigateToHomeScreen: () -> Unit,
     popBackNavigationStack: () -> Unit,
     viewModel: AddRequestScreenViewModel = koinViewModel()
 ) {
+    val isLoading = viewModel.isLoading.collectAsStateWithLifecycle()
     val isCreationEnabled = viewModel.isCreationEnabled.collectAsStateWithLifecycle()
     val selectedRequestMethod = viewModel.selectedRequestMethod.collectAsStateWithLifecycle()
     val requestUrl = viewModel.requestUrl.collectAsStateWithLifecycle()
@@ -95,6 +97,7 @@ fun AddRequestScreenView(
                 value = requestUrl.value,
                 onValueChange = viewModel::setRequestUrl,
                 placeholder = stringResource(id = R.string.url_text_field_placeholder),
+                readOnly = isLoading.value,
                 modifier = Modifier
                     .padding(horizontal = 12.dp)
                     .fillMaxWidth()
@@ -106,6 +109,7 @@ fun AddRequestScreenView(
                 placeholder = stringResource(id = R.string.title_of_request_input_placeholder),
                 singleLine = true,
                 textStyle = MaterialTheme.typography.titleLarge,
+                readOnly = isLoading.value,
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -113,6 +117,7 @@ fun AddRequestScreenView(
                 value = description.value,
                 onValueChange = viewModel::setDescription,
                 placeholder = stringResource(id = R.string.description_of_request_input_placeholder),
+                readOnly = isLoading.value,
                 modifier = Modifier.fillMaxWidth()
             )
         }
@@ -126,9 +131,10 @@ fun AddRequestScreenView(
         ) {
             CustomButton(
                 text = stringResource(id = R.string.add_request_button_text),
-                onClick = viewModel::createRequest,
+                onClick = { viewModel.createRequest(navigateToHomeScreen) },
                 enabled = isCreationEnabled.value,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                isLoading = isLoading.value
             )
         }
     }

@@ -17,7 +17,10 @@ fun MainNavGraph() {
         }
 
         composable<Destinations.AddRequestScreen> {
-            AddRequestScreenView(popBackNavigationStack = { navController.popBackStack() })
+            AddRequestScreenView(
+                navigateToHomeScreen = { navController.navigate(Destinations.HomeScreen) },
+                popBackNavigationStack = { navController.popBackStack() }
+            )
         }
     }
 }

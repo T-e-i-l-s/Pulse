@@ -10,7 +10,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 /* View model of create new request screen */
-class AddRequestScreenViewModel(private val requestsRepository: RequestsRepository) : ViewModel() {
+class AddRequestScreenViewModel(
+    private val requestsRepository: RequestsRepository
+) : ViewModel() {
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
     private val _isCreationEnabled = MutableStateFlow(false)
     val isCreationEnabled: StateFlow<Boolean> = _isCreationEnabled
 
@@ -27,6 +32,7 @@ class AddRequestScreenViewModel(private val requestsRepository: RequestsReposito
     val description: StateFlow<String> = _description
 
     fun selectRequestMethod(requestMethod: RequestMethod) {
+        if (isLoading.value) return
         _selectedRequestMethod.value =
             if (selectedRequestMethod.value == requestMethod) null else requestMethod
         checkIsCreationEnabled()
@@ -51,8 +57,10 @@ class AddRequestScreenViewModel(private val requestsRepository: RequestsReposito
             selectedRequestMethod.value != null && requestUrl.value.isNotBlank() && title.value.isNotBlank()
     }
 
-    fun createRequest() {
+    fun createRequest(navigateToHomeScreen: () -> Unit) {
         viewModelScope.launch {
+            _isLoading.value = true
+
             selectedRequestMethod.value?.let { requestMethodSafe ->
                 requestsRepository.addRequest(
                     RequestModel(
@@ -63,6 +71,9 @@ class AddRequestScreenViewModel(private val requestsRepository: RequestsReposito
                     )
                 )
             }
+
+            navigateToHomeScreen()
+            _isLoading.value = false
         }
     }
 }

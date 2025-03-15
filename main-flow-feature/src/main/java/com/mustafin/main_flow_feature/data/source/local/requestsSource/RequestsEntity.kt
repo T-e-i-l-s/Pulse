@@ -8,7 +8,7 @@ import com.mustafin.main_flow_feature.utils.requests.ResponseStatusModel
 
 @Entity(tableName = Tables.REQUESTS_TABLE)
 data class RequestsEntity(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int,
     val title: String,
     val description: String,
     val url: String,

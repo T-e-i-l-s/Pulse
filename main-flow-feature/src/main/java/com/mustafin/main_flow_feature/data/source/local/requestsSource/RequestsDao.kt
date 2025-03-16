@@ -13,9 +13,12 @@ interface RequestsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRequest(request: RequestsEntity)
 
-    @Query("UPDATE requests_table SET lastResponseStatus = :newStatus WHERE id = :id")
+    @Query("UPDATE ${Tables.REQUESTS_TABLE} SET lastResponseStatus = :newStatus WHERE id = :id")
     suspend fun updateResponseStatus(id: Int, newStatus: HttpResponseStatusModel?)
 
     @Query("SELECT * FROM ${Tables.REQUESTS_TABLE}")
     suspend fun getAllRequests(): List<RequestsEntity>
+
+    @Query("DELETE FROM ${Tables.REQUESTS_TABLE} WHERE id = :id")
+    suspend fun deleteRequestById(id: Int)
 }

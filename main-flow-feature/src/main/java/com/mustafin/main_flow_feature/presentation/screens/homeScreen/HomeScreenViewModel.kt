@@ -26,16 +26,10 @@ class HomeScreenViewModel(
     private fun loadData() {
         viewModelScope.launch {
             _loadingState.value = LoadingState.LOADING
-            requestsRepository.getAllRequests(
-                onLoad = { data ->
-                    _requests.value = data
-                    _loadingState.value = LoadingState.UPDATING
-                },
-                onUpdate = { data ->
-                    _requests.value = data
-                    _loadingState.value = LoadingState.LOADED
-                }
-            )
+            _requests.value = requestsRepository.getListOfRequests()
+            _loadingState.value = LoadingState.UPDATING
+            _requests.value = requestsRepository.updateResponseStatuses(requests.value)
+            _loadingState.value = LoadingState.LOADED
         }
     }
 }

@@ -17,11 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mustafin.main_flow_feature.R
 import com.mustafin.main_flow_feature.utils.requests.RequestModel
+import com.mustafin.main_flow_feature.utils.time.toSimpleTimeString
 import java.time.LocalDateTime
 
 /* Composable of view with information about the request */
@@ -41,6 +43,16 @@ fun RequestView(request: RequestModel) {
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Text(
+                    text = stringResource(id = R.string.updated_at) + " " +
+                            responseStatusSafe.updatedAt.toSimpleTimeString(),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = colorResource(id = R.color.gray),
+                    modifier = Modifier.weight(1f)
+                )
+
+                Spacer(modifier = Modifier.width(8.dp))
+
                 ResponseStatusView(responseStatusSafe)
             }
 

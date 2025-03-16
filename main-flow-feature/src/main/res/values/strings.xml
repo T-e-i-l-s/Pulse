@@ -4,6 +4,7 @@
     <string name="all_requests_title">All requests</string>
     <string name="new_request_button_text">New</string>
     <string name="request_was_not_completed">Unavailable</string>
+    <string name="updated_at">Updated at</string>
 
     <!-- Add Request Screen -->
     <string name="add_request_screen_title">New request</string>

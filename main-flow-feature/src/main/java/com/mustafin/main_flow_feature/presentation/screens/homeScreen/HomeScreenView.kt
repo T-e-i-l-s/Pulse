@@ -72,10 +72,8 @@ fun HomeScreenView(
             }
         }
 
-        requests.value?.let { requestsSafe ->
-            items(requestsSafe) {
-                RequestView(request = it)
-            }
+        items(requests.value) {
+            RequestView(request = it)
         }
 
         item {

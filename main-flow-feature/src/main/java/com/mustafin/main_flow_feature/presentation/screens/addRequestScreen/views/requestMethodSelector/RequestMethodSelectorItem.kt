@@ -19,12 +19,12 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.mustafin.main_flow_feature.R
-import com.mustafin.main_flow_feature.utils.requests.RequestMethod
+import com.mustafin.ping_feature.utils.http.HttpMethod
 
 /* Composable that presents type of HTTP-request(GET, POST and etc.) */
 @Composable
 fun RequestMethodSelectorItem(
-    requestMethod: RequestMethod,
+    requestMethod: com.mustafin.ping_feature.utils.http.HttpMethod,
     isSelected: Boolean,
     onClick: () -> Unit
 ) {

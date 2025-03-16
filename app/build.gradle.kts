@@ -53,10 +53,11 @@ android {
 dependencies {
     implementation(project(":navigation"))
     implementation(project(":main-flow-feature"))
+    implementation(project(":ping-feature"))
 
     // Koin DI
     implementation(libs.koin.android)
-    
+
     // Core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

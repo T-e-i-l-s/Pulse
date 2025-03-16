@@ -5,15 +5,13 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.mustafin.main_flow_feature.data.source.local.requestsSource.RequestsDao
 import com.mustafin.main_flow_feature.data.source.local.requestsSource.RequestsEntity
-import com.mustafin.main_flow_feature.data.source.local.typeConverters.LocalDateTimeConverters
-import com.mustafin.main_flow_feature.data.source.local.typeConverters.RequestMethodConverters
+import com.mustafin.main_flow_feature.data.source.local.typeConverters.HttpRequestConverters
 import com.mustafin.main_flow_feature.data.source.local.typeConverters.ResponseStatusConverters
 
 /* Main database of this app */
 @Database(entities = [RequestsEntity::class], version = 1)
 @TypeConverters(
-    LocalDateTimeConverters::class,
-    RequestMethodConverters::class,
+    HttpRequestConverters::class,
     ResponseStatusConverters::class
 )
 abstract class AppDatabase : RoomDatabase() {

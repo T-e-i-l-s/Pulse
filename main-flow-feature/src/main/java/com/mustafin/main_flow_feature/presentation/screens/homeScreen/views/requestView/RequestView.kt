@@ -21,9 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mustafin.main_flow_feature.R
-import com.mustafin.main_flow_feature.utils.requests.RequestMethod
 import com.mustafin.main_flow_feature.utils.requests.RequestModel
-import com.mustafin.main_flow_feature.utils.requests.ResponseStatusModel
 import java.time.LocalDateTime
 
 /* Composable of view with information about the request */
@@ -45,7 +43,7 @@ fun RequestView(request: RequestModel) {
             ) {
                 ResponseStatusView(responseStatusSafe)
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
         }
 
@@ -66,12 +64,12 @@ fun RequestView(request: RequestModel) {
         Spacer(modifier = Modifier.height(12.dp))
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            RequestMethodView(requestMethod = request.requestMethod)
+            RequestMethodView(requestMethod = request.httpRequestInfo.httpMethod)
 
             Spacer(modifier = Modifier.width(4.dp))
 
             Text(
-                text = request.url,
+                text = request.httpRequestInfo.url,
                 style = MaterialTheme.typography.labelSmall,
                 color = colorResource(id = R.color.gray),
                 maxLines = 1,
@@ -89,9 +87,11 @@ private fun Preview() {
             id = 1,
             title = "Schedule Api",
             description = "Api with my daily schedule",
-            url = "https://myshedule.org/api/v1",
-            requestMethod = RequestMethod.GET,
-            lastResponseStatus = ResponseStatusModel(
+            httpRequestInfo = com.mustafin.ping_feature.utils.http.HttpRequestModel(
+                "https://test.test",
+                com.mustafin.ping_feature.utils.http.HttpMethod.GET
+            ),
+            lastResponseStatus = com.mustafin.ping_feature.utils.http.HttpResponseStatusModel(
                 200,
                 "OK",
                 LocalDateTime.now()

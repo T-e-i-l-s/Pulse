@@ -11,11 +11,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mustafin.main_flow_feature.utils.requests.RequestMethod
+import com.mustafin.ping_feature.utils.http.HttpMethod
 
 /* Composable that contains small text with request type */
 @Composable
-fun RequestMethodView(requestMethod: RequestMethod) {
+fun RequestMethodView(requestMethod: HttpMethod) {
     val contentColor = colorResource(id = requestMethod.colorRes)
 
     Text(
@@ -32,5 +32,5 @@ fun RequestMethodView(requestMethod: RequestMethod) {
 @Composable
 @Preview
 private fun Preview() {
-    RequestMethodView(RequestMethod.GET)
+    RequestMethodView(HttpMethod.GET)
 }

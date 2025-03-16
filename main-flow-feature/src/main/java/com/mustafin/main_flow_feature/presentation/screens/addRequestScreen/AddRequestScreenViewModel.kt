@@ -3,8 +3,8 @@ package com.mustafin.main_flow_feature.presentation.screens.addRequestScreen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mustafin.main_flow_feature.data.repositories.requestsRepository.RequestsRepository
-import com.mustafin.main_flow_feature.utils.requests.RequestMethod
 import com.mustafin.main_flow_feature.utils.requests.RequestModel
+import com.mustafin.ping_feature.utils.http.HttpMethod
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -19,8 +19,10 @@ class AddRequestScreenViewModel(
     private val _isCreationEnabled = MutableStateFlow(false)
     val isCreationEnabled: StateFlow<Boolean> = _isCreationEnabled
 
-    private val _selectedRequestMethod = MutableStateFlow<RequestMethod?>(null)
-    val selectedRequestMethod: StateFlow<RequestMethod?> = _selectedRequestMethod
+    private val _selectedRequestMethod =
+        MutableStateFlow<com.mustafin.ping_feature.utils.http.HttpMethod?>(null)
+    val selectedRequestMethod: StateFlow<com.mustafin.ping_feature.utils.http.HttpMethod?> =
+        _selectedRequestMethod
 
     private val _requestUrl = MutableStateFlow("")
     val requestUrl: StateFlow<String> = _requestUrl
@@ -31,7 +33,7 @@ class AddRequestScreenViewModel(
     private val _description = MutableStateFlow("")
     val description: StateFlow<String> = _description
 
-    fun selectRequestMethod(requestMethod: RequestMethod) {
+    fun selectRequestMethod(requestMethod: HttpMethod) {
         if (isLoading.value) return
         _selectedRequestMethod.value =
             if (selectedRequestMethod.value == requestMethod) null else requestMethod
@@ -66,8 +68,10 @@ class AddRequestScreenViewModel(
                     RequestModel(
                         title = title.value,
                         description = description.value,
-                        requestMethod = requestMethodSafe,
-                        url = requestUrl.value
+                        httpRequestInfo = com.mustafin.ping_feature.utils.http.HttpRequestModel(
+                            url = requestUrl.value,
+                            httpMethod = requestMethodSafe
+                        )
                     )
                 )
             }

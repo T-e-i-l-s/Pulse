@@ -1,24 +1,39 @@
 package com.mustafin.main_flow_feature.data.source.local.typeConverters
 
 import androidx.room.TypeConverter
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.mustafin.main_flow_feature.utils.requests.ResponseStatusModel
-import org.koin.java.KoinJavaComponent.inject
+import com.mustafin.ping_feature.utils.http.HttpResponseStatusModel
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /* Room converters for ResponseStatusModel class */
 class ResponseStatusConverters {
-    private val gson: Gson by inject(Gson::class.java)
-
-    private val type = object : TypeToken<ResponseStatusModel?>() {}.type
+    private val separator = "|"
+    private val dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
 
     @TypeConverter
-    fun fromResponseStatus(responseStatus: ResponseStatusModel?): String {
-        return gson.toJson(responseStatus)
+    fun fromResponseStatus(responseStatus: HttpResponseStatusModel?): String {
+        return if (responseStatus != null) {
+            "${responseStatus.statusCode ?: ""}$separator${responseStatus.message ?: ""}$separator${
+                responseStatus.updatedAt.format(
+                    dateTimeFormatter
+                )
+            }"
+        } else {
+            ""
+        }
     }
 
     @TypeConverter
-    fun toResponseStatus(value: String): ResponseStatusModel? {
-        return gson.fromJson(value, type)
+    fun toResponseStatus(value: String): HttpResponseStatusModel? {
+        if (value.isEmpty()) return null
+
+        val parts = value.split(separator)
+        if (parts.size != 3) return null
+
+        val statusCode = parts[0].toIntOrNull()
+        val message = parts[1].takeIf { it.isNotEmpty() }
+        val updatedAt = LocalDateTime.parse(parts[2], dateTimeFormatter)
+
+        return HttpResponseStatusModel(statusCode, message, updatedAt)
     }
 }

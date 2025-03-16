@@ -10,8 +10,7 @@ fun RequestsEntity.mapToRequestModel(): RequestModel {
         id = id,
         title = title,
         description = description,
-        url = url,
-        requestMethod = requestMethod,
+        httpRequestInfo = httpRequestInfo,
         lastResponseStatus = lastResponseStatus
     )
 }
@@ -21,8 +20,7 @@ fun RequestModel.mapToRequestsEntity(): RequestsEntity {
         id = id,
         title = title,
         description = description,
-        url = url,
-        requestMethod = requestMethod,
+        httpRequestInfo = httpRequestInfo,
         lastResponseStatus = lastResponseStatus
     )
 }

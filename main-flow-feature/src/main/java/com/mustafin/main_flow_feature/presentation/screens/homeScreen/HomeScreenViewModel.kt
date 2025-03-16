@@ -16,8 +16,8 @@ class HomeScreenViewModel(
     private val _loadingState = MutableStateFlow(LoadingState.LOADING)
     val loadingState: StateFlow<LoadingState> = _loadingState
 
-    private val _requests = MutableStateFlow<List<RequestModel>?>(null)
-    val requests: StateFlow<List<RequestModel>?> = _requests
+    private val _requests = MutableStateFlow<List<RequestModel>>(emptyList())
+    val requests: StateFlow<List<RequestModel>> = _requests
 
     init {
         loadData()
@@ -26,8 +26,16 @@ class HomeScreenViewModel(
     private fun loadData() {
         viewModelScope.launch {
             _loadingState.value = LoadingState.LOADING
-            _requests.value = requestsRepository.getAllRequests()
-            _loadingState.value = LoadingState.LOADED
+            requestsRepository.getAllRequests(
+                onLoad = { data ->
+                    _requests.value = data
+                    _loadingState.value = LoadingState.UPDATING
+                },
+                onUpdate = { data ->
+                    _requests.value = data
+                    _loadingState.value = LoadingState.LOADED
+                }
+            )
         }
     }
 }

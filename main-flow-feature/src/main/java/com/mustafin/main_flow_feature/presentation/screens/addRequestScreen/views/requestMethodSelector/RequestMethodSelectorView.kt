@@ -8,20 +8,20 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.mustafin.main_flow_feature.utils.requests.RequestMethod
+import com.mustafin.ping_feature.utils.http.HttpMethod
 
 /* Composable with request method selector */
 @Composable
 fun RequestMethodSelectorView(
-    selectedMethod: RequestMethod?,
-    toggleIsSelected: (RequestMethod) -> Unit
+    selectedMethod: HttpMethod?,
+    toggleIsSelected: (HttpMethod) -> Unit
 ) {
     val methods = listOf(
-        RequestMethod.GET,
-        RequestMethod.POST,
-        RequestMethod.DELETE,
-        RequestMethod.PUT,
-        RequestMethod.PATCH
+        HttpMethod.GET,
+        HttpMethod.POST,
+        HttpMethod.DELETE,
+        HttpMethod.PUT,
+        HttpMethod.PATCH
     )
 
     LazyRow(

@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":ping-feature"))
     implementation(project(":ui-components"))
 
     // Gson

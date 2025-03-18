@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.mustafin.main_flow_feature"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 26
@@ -43,6 +43,7 @@ android {
 dependencies {
     implementation(project(":ping-feature"))
     implementation(project(":ui-components"))
+    implementation(project(":background-checks-feature"))
 
     // Gson
     implementation(libs.gson)

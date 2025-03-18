@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.mustafin.ui_components"
+    namespace = "com.mustafin.background_checks_feature"
     compileSdk = 35
 
     defaultConfig {
@@ -40,14 +40,12 @@ android {
 }
 
 dependencies {
-    // Core
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.material)
+    implementation(project(":ping-feature"))
+
+    // Koin DI
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+
+    // Work Manager
+    implementation(libs.androidx.work.runtime.ktx)
 }

@@ -22,7 +22,7 @@ class BackgroundChecksRepositoryImpl(private val context: Context) : BackgroundC
 
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             "ping_worker",
-            ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
+            ExistingPeriodicWorkPolicy.KEEP,
             request
         )
     }

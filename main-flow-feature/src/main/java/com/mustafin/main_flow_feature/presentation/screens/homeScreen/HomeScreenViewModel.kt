@@ -43,6 +43,15 @@ class HomeScreenViewModel(
         }
     }
 
+    fun deleteRequest(requestModel: RequestModel) {
+        viewModelScope.launch {
+            requestsRepository.deleteRequest(requestModel.id)
+            val updatedRequestsList = requests.value.toMutableList()
+            updatedRequestsList.removeIf { it.id == requestModel.id }
+            _requests.value = updatedRequestsList
+        }
+    }
+
     fun onPermissionRequestResult(wasGranted: Boolean) {
         _notificationPermissionWasGranted.value = wasGranted
     }

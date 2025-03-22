@@ -61,7 +61,7 @@ fun HomeScreenView(
             viewModel.checkNotificationPermissionsStatus()
         }
     }
-    
+
     LaunchedEffect(Unit) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             viewModel.checkNotificationPermissionsStatus()
@@ -117,7 +117,7 @@ fun HomeScreenView(
         }
 
         items(requests.value) {
-            RequestView(request = it)
+            RequestView(request = it, deleteRequest = { viewModel.deleteRequest(it) })
         }
 
         item {

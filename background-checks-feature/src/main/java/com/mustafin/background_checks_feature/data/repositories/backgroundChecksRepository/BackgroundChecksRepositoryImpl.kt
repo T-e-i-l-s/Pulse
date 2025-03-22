@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
 
 /* Repository that helps to create ping background work */
 class BackgroundChecksRepositoryImpl(private val context: Context) : BackgroundChecksRepository {
-    override fun register() {
+    override fun registerPingWorker() {
         val request = PeriodicWorkRequestBuilder<PingWorker>(15, TimeUnit.MINUTES)
             .setConstraints(
                 Constraints.Builder()

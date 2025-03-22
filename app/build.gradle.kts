@@ -55,6 +55,7 @@ dependencies {
     implementation(project(":main-flow-feature"))
     implementation(project(":ping-feature"))
     implementation(project(":background-checks-feature"))
+    implementation(project(":notifications-feature"))
 
     // Koin DI
     implementation(libs.koin.android)

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Error notification -->
+    <string name="error_notification_channel_name">Errors</string>
+    <string name="error_notification_channel_description">
+        Notifications that appear when the response status of a service is 400+
+    </string>
+    <string name="error_notification_title">Something is wrong</string>
+    <string name="error_notification_text">%1$s -> %2$d %3$s</string>
+</resources>

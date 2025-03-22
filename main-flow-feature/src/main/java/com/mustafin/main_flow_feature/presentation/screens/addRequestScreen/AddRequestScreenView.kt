@@ -122,7 +122,7 @@ fun AddRequestScreenView(
             )
         }
 
-        Row(
+        Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()

@@ -10,19 +10,15 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 /* View model of create new request screen */
-class AddRequestScreenViewModel(
-    private val requestsRepository: RequestsRepository
-) : ViewModel() {
+class AddRequestScreenViewModel(private val requestsRepository: RequestsRepository) : ViewModel() {
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
     private val _isCreationEnabled = MutableStateFlow(false)
     val isCreationEnabled: StateFlow<Boolean> = _isCreationEnabled
 
-    private val _selectedRequestMethod =
-        MutableStateFlow<com.mustafin.ping_feature.utils.http.HttpMethod?>(null)
-    val selectedRequestMethod: StateFlow<com.mustafin.ping_feature.utils.http.HttpMethod?> =
-        _selectedRequestMethod
+    private val _selectedRequestMethod = MutableStateFlow<HttpMethod?>(null)
+    val selectedRequestMethod: StateFlow<HttpMethod?> = _selectedRequestMethod
 
     private val _requestUrl = MutableStateFlow("")
     val requestUrl: StateFlow<String> = _requestUrl

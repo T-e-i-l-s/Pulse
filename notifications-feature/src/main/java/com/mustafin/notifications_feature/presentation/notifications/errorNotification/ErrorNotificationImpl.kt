@@ -1,7 +1,9 @@
 package com.mustafin.notifications_feature.presentation.notifications.errorNotification
 
-import android.annotation.SuppressLint
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.mustafin.notifications_feature.NotificationConstants
@@ -10,7 +12,6 @@ import com.mustafin.notifications_feature.utils.error.ErrorNotificationModel
 
 /* A class that creates and manages error notifications */
 class ErrorNotificationImpl(private val context: Context) : ErrorNotification {
-    @SuppressLint("MissingPermission")
     override fun sendNotification(error: ErrorNotificationModel) {
         val builder = NotificationCompat.Builder(
             context,
@@ -28,6 +29,13 @@ class ErrorNotificationImpl(private val context: Context) : ErrorNotification {
             setSmallIcon(R.drawable.error_icon)
         }
 
-        NotificationManagerCompat.from(context).notify(1, builder.build())
+        if (
+            ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            NotificationManagerCompat.from(context).notify(1, builder.build())
+        }
     }
 }

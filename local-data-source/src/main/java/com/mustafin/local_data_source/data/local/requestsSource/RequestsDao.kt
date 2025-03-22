@@ -1,10 +1,10 @@
-package com.mustafin.main_flow_feature.data.source.local.requestsSource
+package com.mustafin.local_data_source.data.local.requestsSource
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.mustafin.main_flow_feature.data.source.local.db.Tables
+import com.mustafin.local_data_source.data.local.db.Tables
 import com.mustafin.ping_feature.utils.http.HttpResponseStatusModel
 
 /* Dao-interface of requests table */

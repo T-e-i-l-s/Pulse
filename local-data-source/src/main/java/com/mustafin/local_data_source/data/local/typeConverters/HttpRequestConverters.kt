@@ -1,4 +1,4 @@
-package com.mustafin.main_flow_feature.data.source.local.typeConverters
+package com.mustafin.local_data_source.data.local.typeConverters
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

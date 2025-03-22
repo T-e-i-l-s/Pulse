@@ -1,6 +1,6 @@
 package com.mustafin.main_flow_feature.data.mappers
 
-import com.mustafin.main_flow_feature.data.source.local.requestsSource.RequestsEntity
+import com.mustafin.local_data_source.data.local.requestsSource.RequestsEntity
 import com.mustafin.main_flow_feature.utils.requests.RequestModel
 
 /* Mappers for request data models */

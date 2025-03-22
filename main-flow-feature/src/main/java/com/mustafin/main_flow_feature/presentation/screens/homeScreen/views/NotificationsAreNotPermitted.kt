@@ -25,7 +25,6 @@ import com.mustafin.main_flow_feature.R
 /* Composable with a warning that applications cannot send notifications */
 @Composable
 fun NotificationsAreNotPermitted(openNotificationSettings: () -> Unit) {
-
     Row(
         modifier = Modifier
             .fillMaxWidth()

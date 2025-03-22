@@ -1,11 +1,12 @@
 plugins {
+    id("com.google.devtools.ksp")
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
-    namespace = "com.mustafin.main_flow_feature"
+    namespace = "com.mustafin.local_data_source"
     compileSdk = 35
 
     defaultConfig {
@@ -31,33 +32,19 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
 }
 
 dependencies {
     implementation(project(":ping-feature"))
-    implementation(project(":local-data-source"))
-    implementation(project(":ui-components"))
-    implementation(project(":background-checks-feature"))
+
+    // Gson
+    implementation(libs.gson)
+
+    // Room
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     // Koin DI
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
-
-    // Core
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.material)
-    implementation(project(":local-data-source"))
 }

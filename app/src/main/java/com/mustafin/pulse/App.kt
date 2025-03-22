@@ -3,11 +3,11 @@ package com.mustafin.pulse
 import android.app.Application
 import com.mustafin.background_checks_feature.data.repositories.backgroundChecksRepository.BackgroundChecksRepository
 import com.mustafin.background_checks_feature.di.backgroundChecksModule
+import com.mustafin.local_data_source.di.localDataSourceModule
 import com.mustafin.main_flow_feature.di.mainFlowModule
 import com.mustafin.notifications_feature.data.notifacations.NotificationChannelManager
 import com.mustafin.notifications_feature.di.notificationsFeatureModule
 import com.mustafin.notifications_feature.presentation.notifications.errorNotification.ErrorNotification
-import com.mustafin.notifications_feature.utils.error.ErrorNotificationModel
 import com.mustafin.ping_feature.di.pingModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
@@ -30,7 +30,13 @@ class App : Application() {
 
         startKoin {
             androidContext(this@App)
-            modules(mainFlowModule, pingModule, backgroundChecksModule, notificationsFeatureModule)
+            modules(
+                mainFlowModule,
+                pingModule,
+                backgroundChecksModule,
+                notificationsFeatureModule,
+                localDataSourceModule
+            )
         }
 
         // Creating/restarting background ping work
@@ -38,13 +44,5 @@ class App : Application() {
 
         // Creating required notification channels
         notificationChannelManager.initializeErrorNotificationChannel()
-
-        errorNotification.sendNotification(
-            ErrorNotificationModel(
-                "https://mustafin.online/",
-                500,
-                "Internal Server Error"
-            )
-        )
     }
 }

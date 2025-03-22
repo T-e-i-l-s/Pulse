@@ -1,9 +1,10 @@
-package com.mustafin.main_flow_feature.data.source.local.requestsSource
+package com.mustafin.local_data_source.data.local.requestsSource
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.mustafin.main_flow_feature.data.source.local.db.Tables
+import com.mustafin.local_data_source.data.local.db.Tables
 import com.mustafin.ping_feature.utils.http.HttpRequestModel
+import com.mustafin.ping_feature.utils.http.HttpResponseStatusModel
 
 @Entity(tableName = Tables.REQUESTS_TABLE)
 data class RequestsEntity(
@@ -11,5 +12,5 @@ data class RequestsEntity(
     val title: String,
     val description: String,
     val httpRequestInfo: HttpRequestModel,
-    val lastResponseStatus: com.mustafin.ping_feature.utils.http.HttpResponseStatusModel?
+    val lastResponseStatus: HttpResponseStatusModel?
 )

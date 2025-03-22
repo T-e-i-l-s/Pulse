@@ -41,6 +41,9 @@ android {
 
 dependencies {
     implementation(project(":ping-feature"))
+    implementation(project(":local-data-source"))
+    implementation(project(":notifications-feature"))
+
 
     // Koin DI
     implementation(libs.koin.android)

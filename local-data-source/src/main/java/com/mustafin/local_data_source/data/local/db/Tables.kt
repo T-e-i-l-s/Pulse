@@ -1,4 +1,4 @@
-package com.mustafin.main_flow_feature.data.source.local.db
+package com.mustafin.local_data_source.data.local.db
 
 /* Object with all table names */
 object Tables {

@@ -3,13 +3,64 @@ package com.mustafin.background_checks_feature.data.workManager.workers
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.mustafin.local_data_source.data.local.requestsSource.RequestsDao
+import com.mustafin.local_data_source.data.local.requestsSource.RequestsEntity
+import com.mustafin.notifications_feature.presentation.notifications.errorNotification.ErrorNotification
+import com.mustafin.notifications_feature.utils.error.ErrorNotificationModel
+import com.mustafin.ping_feature.data.repositories.pingRepository.PingRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import org.koin.java.KoinJavaComponent.inject
 
 /* Worker that checks servers status, using PingRepository (ping-feature module) */
 class PingWorker(
-    appContext: Context, workerParams: WorkerParameters
+    appContext: Context,
+    workerParams: WorkerParameters,
 ) : Worker(appContext, workerParams) {
+    private val pingRepository: PingRepository by inject(PingRepository::class.java)
+    private val requestsDao: RequestsDao by inject(RequestsDao::class.java)
+    private val errorNotification: ErrorNotification by inject(ErrorNotification::class.java)
+
     override fun doWork(): Result {
-        println("Just do it!")
+        CoroutineScope(Dispatchers.IO).launch {
+            val requests = requestsDao.getAllRequests()
+            coroutineScope {
+                requests.map { request ->
+                    async {
+                        checkAnService(request)
+                    }
+                }.awaitAll()
+            }
+        }
         return Result.success()
+    }
+
+    private suspend fun checkAnService(request: RequestsEntity): RequestsEntity {
+        // Executing request
+        val newResponseStatus = pingRepository.ping(request.httpRequestInfo)
+
+        // Updating values in cache
+        requestsDao.updateResponseStatus(request.id, newResponseStatus)
+
+        // Sending notification if smth is wrong
+        newResponseStatus?.statusCode?.let { statusCodeSafe ->
+            newResponseStatus.message?.let { messageSafe ->
+                if (statusCodeSafe >= 400) {
+                    errorNotification.sendNotification(
+                        ErrorNotificationModel(
+                            request.httpRequestInfo.url,
+                            statusCodeSafe,
+                            messageSafe
+                        )
+                    )
+                }
+            }
+        }
+
+        return request.copy(lastResponseStatus = newResponseStatus)
     }
 }

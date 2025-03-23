@@ -6,8 +6,12 @@ import android.os.Build
 import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +27,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -35,6 +43,7 @@ import com.mustafin.main_flow_feature.R
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.NotificationsAreNotPermitted
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.requestView.RequestView
 import com.mustafin.ui_components.presentation.buttons.CustomTinyButton
+import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 
 /* Home screen composable */
@@ -72,8 +81,7 @@ fun HomeScreenView(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.background)),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+            .background(colorResource(id = R.color.background))
     ) {
         item {
             Spacer(
@@ -114,18 +122,39 @@ fun HomeScreenView(
                     }
                 }
             }
+
+            Spacer(modifier = Modifier.height(12.dp))
         }
 
-        items(requests.value) {
-            RequestView(request = it, deleteRequest = { viewModel.deleteRequest(it) })
+        items(requests.value, key = { it.id }) { request ->
+            val animationDuration = 300
+
+            var visible by remember { mutableStateOf(true) }
+
+            LaunchedEffect(visible) {
+                if (!visible) {
+                    delay(animationDuration.toLong())
+                    viewModel.deleteRequest(request)
+                }
+            }
+
+            AnimatedVisibility(
+                visible = visible,
+                exit = fadeOut(tween(animationDuration)) + shrinkVertically(tween(animationDuration))
+            ) {
+                Column {
+                    RequestView(
+                        request = request,
+                        deleteRequest = { visible = false }
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+            }
         }
 
         item {
-            Spacer(
-                modifier = Modifier
-                    .navigationBarsPadding()
-                    .height(12.dp)
-            )
+            Spacer(modifier = Modifier.navigationBarsPadding())
         }
     }
 }

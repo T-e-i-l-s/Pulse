@@ -16,10 +16,13 @@ fun MainNavGraph() {
             HomeScreenView(navigateToAddRequestScreen = { navController.navigate(Destinations.AddRequestScreen) })
         }
 
-        composable<Destinations.AddRequestScreen> {
+        composable<Destinations.AddRequestScreen>(
+            enterTransition = { Animations.slideIn },
+            exitTransition = { Animations.slideOut }
+        ) {
             AddRequestScreenView(
                 navigateToHomeScreen = { navController.navigate(Destinations.HomeScreen) },
-                popBackNavigationStack = { navController.popBackStack() }
+                popBackNavigationStack = { navController.popBackStack() },
             )
         }
     }

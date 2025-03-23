@@ -3,6 +3,7 @@ package com.mustafin.main_flow_feature.presentation.screens.addRequestScreen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mustafin.main_flow_feature.data.repositories.requestsRepository.RequestsRepository
+import com.mustafin.main_flow_feature.domain.validators.RequestUrlValidator
 import com.mustafin.main_flow_feature.utils.requests.RequestModel
 import com.mustafin.ping_feature.utils.http.HttpMethod
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +21,7 @@ class AddRequestScreenViewModel(private val requestsRepository: RequestsReposito
     private val _selectedRequestMethod = MutableStateFlow<HttpMethod?>(null)
     val selectedRequestMethod: StateFlow<HttpMethod?> = _selectedRequestMethod
 
-    private val _requestUrl = MutableStateFlow("")
+    private val _requestUrl = MutableStateFlow("https://")
     val requestUrl: StateFlow<String> = _requestUrl
 
     private val _title = MutableStateFlow("")
@@ -28,6 +29,9 @@ class AddRequestScreenViewModel(private val requestsRepository: RequestsReposito
 
     private val _description = MutableStateFlow("")
     val description: StateFlow<String> = _description
+
+    private val _showRequestUrlValidationError = MutableStateFlow(false)
+    val showRequestUrlValidationError: StateFlow<Boolean> = _showRequestUrlValidationError
 
     fun selectRequestMethod(requestMethod: HttpMethod) {
         if (isLoading.value) return
@@ -58,6 +62,14 @@ class AddRequestScreenViewModel(private val requestsRepository: RequestsReposito
     fun createRequest(navigateToHomeScreen: () -> Unit) {
         viewModelScope.launch {
             _isLoading.value = true
+
+            val requestUrlValidationResult =
+                RequestUrlValidator.validateRequestUrl(requestUrl.value)
+            if (!requestUrlValidationResult) {
+                _showRequestUrlValidationError.value = true
+                _isLoading.value = false
+                return@launch
+            }
 
             selectedRequestMethod.value?.let { requestMethodSafe ->
                 requestsRepository.addRequest(

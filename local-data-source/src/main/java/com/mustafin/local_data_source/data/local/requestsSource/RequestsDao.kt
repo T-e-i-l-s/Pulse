@@ -16,7 +16,7 @@ interface RequestsDao {
     @Query("UPDATE ${Tables.REQUESTS_TABLE} SET lastResponseStatus = :newStatus WHERE id = :id")
     suspend fun updateResponseStatus(id: Int, newStatus: HttpResponseStatusModel?)
 
-    @Query("SELECT * FROM ${Tables.REQUESTS_TABLE}")
+    @Query("SELECT * FROM ${Tables.REQUESTS_TABLE} ORDER BY id DESC")
     suspend fun getAllRequests(): List<RequestsEntity>
 
     @Query("DELETE FROM ${Tables.REQUESTS_TABLE} WHERE id = :id")

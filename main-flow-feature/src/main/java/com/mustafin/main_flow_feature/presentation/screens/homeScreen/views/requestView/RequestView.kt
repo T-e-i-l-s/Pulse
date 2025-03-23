@@ -69,13 +69,15 @@ fun RequestView(request: RequestModel, deleteRequest: () -> Unit) {
             color = colorResource(id = R.color.content)
         )
 
-        Spacer(modifier = Modifier.height(4.dp))
-
-        Text(
-            text = request.description,
-            style = MaterialTheme.typography.labelMedium,
-            color = colorResource(id = R.color.content)
-        )
+        if (request.description.isNotBlank()) {
+            Spacer(modifier = Modifier.height(4.dp))
+            
+            Text(
+                text = request.description,
+                style = MaterialTheme.typography.labelMedium,
+                color = colorResource(id = R.color.content)
+            )
+        }
 
         Spacer(modifier = Modifier.height(12.dp))
 

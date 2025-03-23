@@ -42,6 +42,7 @@ class AddRequestScreenViewModel(private val requestsRepository: RequestsReposito
 
     fun setRequestUrl(value: String) {
         _requestUrl.value = value
+        _showRequestUrlValidationError.value = false
         checkIsCreationEnabled()
     }
 

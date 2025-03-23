@@ -6,5 +6,5 @@
         Notifications that appear when the response status of a service is 400+
     </string>
     <string name="error_notification_title">Something is wrong</string>
-    <string name="error_notification_text">%1$s -> %2$d %3$s</string>
+    <string name="error_notification_text">%1$s %2$s -> %3$d %4$s</string>
 </resources>

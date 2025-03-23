@@ -3,5 +3,5 @@ package com.mustafin.notifications_feature.presentation.notifications.errorNotif
 import com.mustafin.notifications_feature.utils.error.ErrorNotificationModel
 
 interface ErrorNotification {
-    fun sendNotification(error: ErrorNotificationModel)
+    fun sendNotification(errors: List<ErrorNotificationModel>)
 }

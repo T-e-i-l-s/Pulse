@@ -28,13 +28,32 @@ class PingWorker(
     override fun doWork(): Result {
         CoroutineScope(Dispatchers.IO).launch {
             val requests = requestsDao.getAllRequests()
+            val errors = mutableListOf<ErrorNotificationModel>()
+
             coroutineScope {
                 requests.map { request ->
                     async {
-                        checkAnService(request)
+                        val updatedRequestEntity = checkAnService(request)
+
+                        updatedRequestEntity.lastResponseStatus?.statusCode?.let { statusCodeSafe ->
+                            updatedRequestEntity.lastResponseStatus?.message?.let { messageSafe ->
+                                if (statusCodeSafe >= 400) {
+                                    errors.add(
+                                        ErrorNotificationModel(
+                                            updatedRequestEntity.httpRequestInfo.url,
+                                            updatedRequestEntity.httpRequestInfo.httpMethod.toString(),
+                                            statusCodeSafe,
+                                            messageSafe
+                                        )
+                                    )
+                                }
+                            }
+                        }
                     }
                 }.awaitAll()
             }
+
+            if (errors.isNotEmpty()) errorNotification.sendNotification(errors)
         }
         return Result.success()
     }
@@ -45,21 +64,6 @@ class PingWorker(
 
         // Updating values in cache
         requestsDao.updateResponseStatus(request.id, newResponseStatus)
-
-        // Sending notification if smth is wrong
-        newResponseStatus?.statusCode?.let { statusCodeSafe ->
-            newResponseStatus.message?.let { messageSafe ->
-                if (statusCodeSafe >= 400) {
-                    errorNotification.sendNotification(
-                        ErrorNotificationModel(
-                            request.httpRequestInfo.url,
-                            statusCodeSafe,
-                            messageSafe
-                        )
-                    )
-                }
-            }
-        }
 
         return request.copy(lastResponseStatus = newResponseStatus)
     }

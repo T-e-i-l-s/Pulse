@@ -9,6 +9,7 @@ import com.mustafin.notifications_feature.data.notifacations.NotificationChannel
 import com.mustafin.notifications_feature.di.notificationsFeatureModule
 import com.mustafin.notifications_feature.presentation.notifications.errorNotification.ErrorNotification
 import com.mustafin.ping_feature.di.pingModule
+import com.mustafin.ui_components.di.uiComponentsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.java.KoinJavaComponent.inject
@@ -32,6 +33,7 @@ class App : Application() {
             androidContext(this@App)
             modules(
                 mainFlowModule,
+                uiComponentsModule,
                 pingModule,
                 backgroundChecksModule,
                 notificationsFeatureModule,

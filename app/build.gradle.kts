@@ -53,6 +53,7 @@ android {
 dependencies {
     implementation(project(":navigation"))
     implementation(project(":main-flow-feature"))
+    implementation(project(":ui-components"))
     implementation(project(":ping-feature"))
     implementation(project(":background-checks-feature"))
     implementation(project(":notifications-feature"))

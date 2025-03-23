@@ -10,7 +10,6 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val mainFlowModule = module {
-
     // Repositories
     singleOf(::RequestsRepositoryImpl) bind RequestsRepository::class
 

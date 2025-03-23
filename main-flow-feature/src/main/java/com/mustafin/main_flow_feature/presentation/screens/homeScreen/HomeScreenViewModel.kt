@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import com.mustafin.main_flow_feature.data.repositories.requestsRepository.RequestsRepository
 import com.mustafin.main_flow_feature.utils.loading.LoadingState
 import com.mustafin.main_flow_feature.utils.requests.RequestModel
+import com.mustafin.ui_components.presentation.vibration.CustomVibrationManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -18,6 +19,7 @@ import kotlinx.coroutines.launch
 /* View model of home screen */
 class HomeScreenViewModel(
     private val application: Application,
+    private val vibrationManager: CustomVibrationManager,
     private val requestsRepository: RequestsRepository
 ) : ViewModel() {
     private val _loadingState = MutableStateFlow(LoadingState.LOADING)
@@ -49,6 +51,9 @@ class HomeScreenViewModel(
             val updatedRequestsList = requests.value.toMutableList()
             updatedRequestsList[index] = updatedRequest
             _requests.value = updatedRequestsList
+
+            // Vibrating
+            vibrationManager.shortSingleVibration()
         }
     }
 
@@ -58,6 +63,9 @@ class HomeScreenViewModel(
             val updatedRequestsList = requests.value.toMutableList()
             updatedRequestsList.removeIf { it.id == requestModel.id }
             _requests.value = updatedRequestsList
+
+            // Vibrating
+            vibrationManager.shortSingleVibration()
         }
     }
 

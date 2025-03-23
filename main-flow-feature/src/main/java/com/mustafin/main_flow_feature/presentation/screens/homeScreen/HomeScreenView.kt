@@ -113,7 +113,10 @@ fun HomeScreenView(
             }
 
             notificationPermissionWasGranted.value?.let { notificationPermissionWasGrantedSafe ->
-                if (!notificationPermissionWasGrantedSafe) {
+                AnimatedVisibility(
+                    visible = !notificationPermissionWasGrantedSafe,
+                    exit = fadeOut() + shrinkVertically()
+                ) {
                     Spacer(modifier = Modifier.height(12.dp))
                     NotificationsAreNotPermitted {
                         val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)

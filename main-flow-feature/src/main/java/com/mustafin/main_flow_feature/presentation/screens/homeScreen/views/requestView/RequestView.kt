@@ -32,7 +32,11 @@ import java.time.LocalDateTime
 
 /* Composable of view with information about the request */
 @Composable
-fun RequestView(request: RequestModel, deleteRequest: () -> Unit) {
+fun RequestView(
+    request: RequestModel,
+    deleteRequest: () -> Unit,
+    toggleRequestNotifications: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -104,6 +108,16 @@ fun RequestView(request: RequestModel, deleteRequest: () -> Unit) {
 
             Spacer(modifier = Modifier.width(12.dp))
 
+            IconButton(onClick = toggleRequestNotifications, modifier = Modifier.size(24.dp)) {
+                Icon(
+                    painter = painterResource(id = if (request.notificationsEnabled) R.drawable.notifications else R.drawable.notifications_off),
+                    contentDescription = null,
+                    tint = colorResource(id = R.color.gray).copy(alpha = if (request.notificationsEnabled) 1f else 0.5f)
+                )
+            }
+
+            Spacer(modifier = Modifier.width(12.dp))
+
             IconButton(onClick = deleteRequest, modifier = Modifier.size(24.dp)) {
                 Icon(
                     painter = painterResource(id = R.drawable.trash),
@@ -133,6 +147,7 @@ private fun Preview() {
                 LocalDateTime.now()
             )
         ),
-        deleteRequest = {}
+        deleteRequest = {},
+        toggleRequestNotifications = {}
     )
 }

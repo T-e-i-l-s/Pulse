@@ -11,7 +11,8 @@ fun RequestsEntity.mapToRequestModel(): RequestModel {
         title = title,
         description = description,
         httpRequestInfo = httpRequestInfo,
-        lastResponseStatus = lastResponseStatus
+        lastResponseStatus = lastResponseStatus,
+        notificationsEnabled = notificationsEnabled
     )
 }
 
@@ -21,6 +22,7 @@ fun RequestModel.mapToRequestsEntity(): RequestsEntity {
         title = title,
         description = description,
         httpRequestInfo = httpRequestInfo,
-        lastResponseStatus = lastResponseStatus
+        lastResponseStatus = lastResponseStatus,
+        notificationsEnabled = notificationsEnabled
     )
 }

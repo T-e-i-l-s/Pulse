@@ -37,7 +37,7 @@ class PingWorker(
 
                         updatedRequestEntity.lastResponseStatus?.statusCode?.let { statusCodeSafe ->
                             updatedRequestEntity.lastResponseStatus?.message?.let { messageSafe ->
-                                if (statusCodeSafe >= 400) {
+                                if (statusCodeSafe >= 400 && updatedRequestEntity.notificationsEnabled) {
                                     errors.add(
                                         ErrorNotificationModel(
                                             updatedRequestEntity.httpRequestInfo.url,
@@ -61,10 +61,11 @@ class PingWorker(
     private suspend fun checkAnService(request: RequestsEntity): RequestsEntity {
         // Executing request
         val newResponseStatus = pingRepository.ping(request.httpRequestInfo)
+        val updatedRequest = request.copy(lastResponseStatus = newResponseStatus)
 
         // Updating values in cache
-        requestsDao.updateResponseStatus(request.id, newResponseStatus)
+        requestsDao.insertRequest(updatedRequest)
 
-        return request.copy(lastResponseStatus = newResponseStatus)
+        return updatedRequest
     }
 }

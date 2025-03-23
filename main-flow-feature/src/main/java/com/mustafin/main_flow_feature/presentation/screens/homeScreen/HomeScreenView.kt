@@ -22,7 +22,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -144,7 +144,7 @@ fun HomeScreenView(
             }
         }
 
-        items(requests.value, key = { it.id }) { request ->
+        itemsIndexed(requests.value, key = { _, request -> request.id }) { index, request ->
             val animationDuration = 300
 
             var visible by remember { mutableStateOf(true) }
@@ -163,7 +163,8 @@ fun HomeScreenView(
                 Column {
                     RequestView(
                         request = request,
-                        deleteRequest = { visible = false }
+                        deleteRequest = { visible = false },
+                        toggleRequestNotifications = { viewModel.toggleNotificationsOnRequest(index) }
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))

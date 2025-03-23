@@ -20,9 +20,9 @@ fun CustomSwitch(
         modifier = modifier,
         colors = SwitchDefaults.colors(
             checkedTrackColor = colorResource(id = R.color.content),
-            checkedThumbColor = colorResource(id = R.color.gray),
+            checkedThumbColor = colorResource(id = R.color.background),
             uncheckedTrackColor = colorResource(id = R.color.ternary_background),
-            uncheckedThumbColor = colorResource(id = R.color.gray),
+            uncheckedThumbColor = colorResource(id = R.color.content),
         )
     )
 }

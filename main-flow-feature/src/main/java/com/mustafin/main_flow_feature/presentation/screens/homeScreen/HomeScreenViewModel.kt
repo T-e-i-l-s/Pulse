@@ -43,6 +43,15 @@ class HomeScreenViewModel(
         }
     }
 
+    fun toggleNotificationsOnRequest(index: Int) {
+        viewModelScope.launch {
+            val updatedRequest = requestsRepository.updateRequest(requests.value[index])
+            val updatedRequestsList = requests.value.toMutableList()
+            updatedRequestsList[index] = updatedRequest
+            _requests.value = updatedRequestsList
+        }
+    }
+
     fun deleteRequest(requestModel: RequestModel) {
         viewModelScope.launch {
             requestsRepository.deleteRequest(requestModel.id)

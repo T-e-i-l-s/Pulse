@@ -23,11 +23,18 @@ class RequestsRepositoryImpl(
             requests.map {
                 async {
                     val newResponseStatus = pingRepository.ping(it.httpRequestInfo)
-                    requestsDao.updateResponseStatus(it.id, newResponseStatus)
-                    it.copy(lastResponseStatus = newResponseStatus)
+                    val updatedRequest = it.copy(lastResponseStatus = newResponseStatus)
+                    requestsDao.insertRequest(updatedRequest.mapToRequestsEntity())
+                    updatedRequest
                 }
             }.awaitAll()
         }
+    }
+
+    override suspend fun updateRequest(request: RequestModel): RequestModel {
+        val updatedRequest = request.copy(notificationsEnabled = !request.notificationsEnabled)
+        requestsDao.insertRequest(updatedRequest.mapToRequestsEntity())
+        return updatedRequest
     }
 
     override suspend fun addRequest(request: RequestModel) {

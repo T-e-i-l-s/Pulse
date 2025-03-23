@@ -12,5 +12,6 @@ data class RequestsEntity(
     val title: String,
     val description: String,
     val httpRequestInfo: HttpRequestModel,
-    val lastResponseStatus: HttpResponseStatusModel?
+    val lastResponseStatus: HttpResponseStatusModel?,
+    val notificationsEnabled: Boolean
 )

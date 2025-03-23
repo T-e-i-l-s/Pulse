@@ -12,6 +12,7 @@
     <!-- Add Request Screen -->
     <string name="add_request_screen_title">New request</string>
     <string name="url_text_field_placeholder">Request url</string>
+    <string name="notifications_enabled_text">Notify if something is wrong</string>
     <string name="request_url_validation_error_text">Invalid URL format. The URL must start with "http://" or "https://", contain a valid domain, and end with a "/".</string>
     <string name="title_of_request_input_placeholder">Title</string>
     <string name="description_of_request_input_placeholder">Description</string>

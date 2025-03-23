@@ -6,12 +6,16 @@ import com.mustafin.main_flow_feature.data.repositories.requestsRepository.Reque
 import com.mustafin.main_flow_feature.domain.validators.RequestUrlValidator
 import com.mustafin.main_flow_feature.utils.requests.RequestModel
 import com.mustafin.ping_feature.utils.http.HttpMethod
+import com.mustafin.ui_components.presentation.vibration.CustomVibrationManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 /* View model of create new request screen */
-class AddRequestScreenViewModel(private val requestsRepository: RequestsRepository) : ViewModel() {
+class AddRequestScreenViewModel(
+    private val requestsRepository: RequestsRepository,
+    private val vibrationManager: CustomVibrationManager
+) : ViewModel() {
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
@@ -24,20 +28,24 @@ class AddRequestScreenViewModel(private val requestsRepository: RequestsReposito
     private val _requestUrl = MutableStateFlow("https://")
     val requestUrl: StateFlow<String> = _requestUrl
 
+    private val _showRequestUrlValidationError = MutableStateFlow(false)
+    val showRequestUrlValidationError: StateFlow<Boolean> = _showRequestUrlValidationError
+
     private val _title = MutableStateFlow("")
     val title: StateFlow<String> = _title
 
     private val _description = MutableStateFlow("")
     val description: StateFlow<String> = _description
 
-    private val _showRequestUrlValidationError = MutableStateFlow(false)
-    val showRequestUrlValidationError: StateFlow<Boolean> = _showRequestUrlValidationError
+    private val _notificationsEnabled = MutableStateFlow(true)
+    val notificationsEnabled: StateFlow<Boolean> = _notificationsEnabled
 
     fun selectRequestMethod(requestMethod: HttpMethod) {
         if (isLoading.value) return
         _selectedRequestMethod.value =
             if (selectedRequestMethod.value == requestMethod) null else requestMethod
         checkIsCreationEnabled()
+        vibrationManager.shortSingleVibration()
     }
 
     fun setRequestUrl(value: String) {
@@ -53,6 +61,11 @@ class AddRequestScreenViewModel(private val requestsRepository: RequestsReposito
 
     fun setDescription(value: String) {
         _description.value = value
+    }
+
+    fun setNotificationsEnabled(value: Boolean) {
+        _notificationsEnabled.value = value
+        vibrationManager.shortSingleVibration()
     }
 
     private fun checkIsCreationEnabled() {
@@ -80,7 +93,8 @@ class AddRequestScreenViewModel(private val requestsRepository: RequestsReposito
                         httpRequestInfo = com.mustafin.ping_feature.utils.http.HttpRequestModel(
                             url = requestUrl.value,
                             httpMethod = requestMethodSafe
-                        )
+                        ),
+                        notificationsEnabled = notificationsEnabled.value
                     )
                 )
             }

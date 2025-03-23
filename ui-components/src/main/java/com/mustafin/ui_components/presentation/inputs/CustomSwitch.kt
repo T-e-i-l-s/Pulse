@@ -4,6 +4,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import com.mustafin.ui_components.R
 
@@ -23,6 +24,7 @@ fun CustomSwitch(
             checkedThumbColor = colorResource(id = R.color.background),
             uncheckedTrackColor = colorResource(id = R.color.ternary_background),
             uncheckedThumbColor = colorResource(id = R.color.content),
+            uncheckedBorderColor = Color.Transparent
         )
     )
 }

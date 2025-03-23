@@ -2,7 +2,9 @@ package com.mustafin.ui_components.presentation.inputs
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -33,7 +35,9 @@ fun CustomTextField(
     maxLines: Int = Int.MAX_VALUE,
     isError: Boolean = false,
     readOnly: Boolean = false,
-    keyboardType: KeyboardType = KeyboardType.Text
+    keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.None,
+    onKeyboardAction: () -> Unit = {},
 ) {
     var isFocused by remember { mutableStateOf(false) }
 
@@ -62,7 +66,11 @@ fun CustomTextField(
             errorIndicatorColor = Color.Transparent,
             unfocusedPlaceholderColor = colorResource(id = R.color.gray),
             focusedPlaceholderColor = colorResource(id = R.color.gray),
-            errorPlaceholderColor = colorResource(id = R.color.gray)
+            errorPlaceholderColor = colorResource(id = R.color.gray),
+            selectionColors = TextSelectionColors(
+                handleColor = colorResource(id = R.color.content),
+                backgroundColor = colorResource(id = R.color.blue).copy(0.4f)
+            )
         ),
         modifier = modifier
             .onFocusChanged { isFocused = it.isFocused }
@@ -78,9 +86,10 @@ fun CustomTextField(
         textStyle = MaterialTheme.typography.labelMedium,
         shape = shape,
         keyboardOptions = KeyboardOptions.Default.copy(
-            imeAction = ImeAction.Done,
+            imeAction = imeAction,
             keyboardType = keyboardType
         ),
+        keyboardActions = KeyboardActions(onAny = { onKeyboardAction() }),
         readOnly = readOnly
     )
 }

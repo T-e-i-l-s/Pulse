@@ -1,6 +1,8 @@
 package com.mustafin.ui_components.presentation.inputs
 
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -26,7 +28,9 @@ fun FullWidthTextField(
     isError: Boolean = false,
     readOnly: Boolean = false,
     textStyle: TextStyle = MaterialTheme.typography.labelMedium,
-    keyboardType: KeyboardType = KeyboardType.Text
+    keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.None,
+    onKeyboardAction: () -> Unit = {},
 ) {
     TextField(
         maxLines = maxLines,
@@ -54,14 +58,19 @@ fun FullWidthTextField(
             errorIndicatorColor = Color.Transparent,
             unfocusedPlaceholderColor = colorResource(id = R.color.gray),
             focusedPlaceholderColor = colorResource(id = R.color.gray),
-            errorPlaceholderColor = colorResource(id = R.color.gray)
+            errorPlaceholderColor = colorResource(id = R.color.gray),
+            selectionColors = TextSelectionColors(
+                handleColor = colorResource(id = R.color.content),
+                backgroundColor = colorResource(id = R.color.blue).copy(0.4f)
+            )
         ),
         modifier = modifier,
         textStyle = textStyle,
         keyboardOptions = KeyboardOptions.Default.copy(
-            imeAction = ImeAction.Done,
-            keyboardType = keyboardType
+            imeAction = imeAction,
+            keyboardType = keyboardType,
         ),
+        keyboardActions = KeyboardActions(onAny = { onKeyboardAction() }),
         readOnly = readOnly
     )
 }

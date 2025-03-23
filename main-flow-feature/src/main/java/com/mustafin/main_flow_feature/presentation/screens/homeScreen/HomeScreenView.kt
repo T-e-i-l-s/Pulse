@@ -37,6 +37,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mustafin.main_flow_feature.R
@@ -127,6 +128,20 @@ fun HomeScreenView(
             }
 
             Spacer(modifier = Modifier.height(12.dp))
+
+            if (requests.value.isEmpty()) {
+                Spacer(modifier = Modifier.height(36.dp))
+
+                Text(
+                    text = stringResource(id = R.string.empty_requests_list),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = colorResource(id = R.color.gray),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp)
+                )
+            }
         }
 
         items(requests.value, key = { it.id }) { request ->

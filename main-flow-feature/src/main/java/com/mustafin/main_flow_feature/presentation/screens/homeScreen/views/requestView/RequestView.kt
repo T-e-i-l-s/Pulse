@@ -61,6 +61,13 @@ fun RequestView(request: RequestModel, deleteRequest: () -> Unit) {
             }
 
             Spacer(modifier = Modifier.height(12.dp))
+        } ?: Column {
+            Text(
+                text = stringResource(id = R.string.service_unavailable),
+                style = MaterialTheme.typography.labelMedium,
+                color = colorResource(id = R.color.gray)
+            )
+            Spacer(modifier = Modifier.height(12.dp))
         }
 
         Text(
@@ -71,7 +78,7 @@ fun RequestView(request: RequestModel, deleteRequest: () -> Unit) {
 
         if (request.description.isNotBlank()) {
             Spacer(modifier = Modifier.height(4.dp))
-            
+
             Text(
                 text = request.description,
                 style = MaterialTheme.typography.labelMedium,

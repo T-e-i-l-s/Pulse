@@ -41,12 +41,22 @@ fun ResponseStatusView(responseStatus: HttpResponseStatusModel) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "$responseStatusCodeSafe • ${responseStatus.message}",
+                text = "$responseStatusCodeSafe",
                 style = MaterialTheme.typography.titleSmall,
                 color = contentColor,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
+
+            if (!responseStatus.message.isNullOrBlank()) {
+                Text(
+                    text = " • ${responseStatus.message}",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = contentColor,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     } ?: Row(
         modifier = Modifier

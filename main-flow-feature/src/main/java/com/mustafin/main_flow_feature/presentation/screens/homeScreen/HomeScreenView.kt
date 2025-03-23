@@ -7,7 +7,6 @@ import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
@@ -27,10 +26,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -43,8 +38,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mustafin.main_flow_feature.R
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.NotificationsAreNotPermitted
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.requestView.RequestView
+import com.mustafin.ui_components.presentation.alerts.ConfirmationAlert
 import com.mustafin.ui_components.presentation.buttons.CustomTinyButton
-import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 
 /* Home screen composable */
@@ -56,6 +51,10 @@ fun HomeScreenView(
     val requests = viewModel.requests.collectAsStateWithLifecycle()
     val notificationPermissionWasGranted =
         viewModel.notificationPermissionWasGranted.collectAsStateWithLifecycle()
+    val showConfirmDisableNotificationsDialog =
+        viewModel.showConfirmDisableNotificationsDialog.collectAsStateWithLifecycle()
+    val showConfirmDeleteRequestDialog =
+        viewModel.showConfirmDeleteRequestDialog.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
 
@@ -145,35 +144,41 @@ fun HomeScreenView(
         }
 
         itemsIndexed(requests.value, key = { _, request -> request.id }) { index, request ->
-            val animationDuration = 300
+            Column {
+                RequestView(
+                    request = request,
+                    deleteRequest = { viewModel.deleteRequest(request) },
+                    toggleRequestNotifications = { viewModel.toggleNotificationsRequest(index) }
+                )
 
-            var visible by remember { mutableStateOf(true) }
-
-            LaunchedEffect(visible) {
-                if (!visible) {
-                    delay(animationDuration.toLong())
-                    viewModel.deleteRequest(request)
-                }
-            }
-
-            AnimatedVisibility(
-                visible = visible,
-                exit = fadeOut(tween(animationDuration)) + shrinkVertically(tween(animationDuration))
-            ) {
-                Column {
-                    RequestView(
-                        request = request,
-                        deleteRequest = { visible = false },
-                        toggleRequestNotifications = { viewModel.toggleNotificationsOnRequest(index) }
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp))
-                }
+                Spacer(modifier = Modifier.height(12.dp))
             }
         }
 
         item {
             Spacer(modifier = Modifier.navigationBarsPadding())
         }
+    }
+
+    if (showConfirmDisableNotificationsDialog.value) {
+        ConfirmationAlert(
+            title = stringResource(id = R.string.confirm_disable_notifications_request_dialog_title),
+            text = stringResource(id = R.string.confirm_disable_notifications_request_dialog_text),
+            confirmButtonText = stringResource(id = R.string.confirm_disable_notifications_request_dialog_confirm_button_text),
+            denyButtonText = stringResource(id = R.string.confirm_disable_notifications_request_dialog_deny_button_text),
+            onConfirm = viewModel::confirmToggleNotificationsRequest,
+            onDismissRequest = viewModel::denyConfirmToggleNotificationsRequest
+        )
+    }
+
+    if (showConfirmDeleteRequestDialog.value) {
+        ConfirmationAlert(
+            title = stringResource(id = R.string.confirm_delete_request_dialog_title),
+            text = stringResource(id = R.string.confirm_delete_request_dialog_text),
+            confirmButtonText = stringResource(id = R.string.confirm_delete_request_dialog_confirm_button_text),
+            denyButtonText = stringResource(id = R.string.confirm_delete_request_dialog_deny_button_text),
+            onConfirm = viewModel::confirmDeleteRequest,
+            onDismissRequest = viewModel::denyDeleteRequest
+        )
     }
 }

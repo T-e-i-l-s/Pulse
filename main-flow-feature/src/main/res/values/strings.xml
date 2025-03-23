@@ -8,6 +8,15 @@
     <string name="service_unavailable">Service unavailable</string>
     <string name="updated_at">Updated at</string>
     <string name="notification_permission_not_granted">You haven\'t allowed notifications, so please click to enable them and receive important updates.</string>
+    <string name="confirm_delete_request_dialog_title">Delete request</string>
+    <string name="confirm_delete_request_dialog_text">Are you sure you want ot delete request?</string>
+    <string name="confirm_delete_request_dialog_confirm_button_text">Delete</string>
+    <string name="confirm_delete_request_dialog_deny_button_text">Cancel</string>
+    <string name="confirm_disable_notifications_request_dialog_title">Disable notifications</string>
+    <string name="confirm_disable_notifications_request_dialog_text">Are you sure you want to disable notifications for that request?</string>
+    <string name="confirm_disable_notifications_request_dialog_confirm_button_text">Disable</string>
+    <string name="confirm_disable_notifications_request_dialog_deny_button_text">Cancel</string>
+
 
     <!-- Add Request Screen -->
     <string name="add_request_screen_title">New request</string>

@@ -31,6 +31,17 @@ class HomeScreenViewModel(
     private val _requests = MutableStateFlow<List<RequestModel>>(emptyList())
     val requests: StateFlow<List<RequestModel>> = _requests
 
+    private var lastIndexToDisableNotifications: Int? = null
+
+    private val _showConfirmDisableNotificationsDialog = MutableStateFlow(false)
+    val showConfirmDisableNotificationsDialog: StateFlow<Boolean> =
+        _showConfirmDisableNotificationsDialog
+
+    private var lastRequestToDelete: RequestModel? = null
+
+    private val _showConfirmDeleteRequestDialog = MutableStateFlow(false)
+    val showConfirmDeleteRequestDialog: StateFlow<Boolean> = _showConfirmDeleteRequestDialog
+
     init {
         loadData()
     }
@@ -45,28 +56,58 @@ class HomeScreenViewModel(
         }
     }
 
-    fun toggleNotificationsOnRequest(index: Int) {
-        viewModelScope.launch {
-            val updatedRequest = requestsRepository.updateRequest(requests.value[index])
-            val updatedRequestsList = requests.value.toMutableList()
-            updatedRequestsList[index] = updatedRequest
-            _requests.value = updatedRequestsList
-
-            // Vibrating
-            vibrationManager.shortSingleVibration()
+    fun toggleNotificationsRequest(index: Int) {
+        lastIndexToDisableNotifications = index
+        if (requests.value[index].notificationsEnabled) {
+            _showConfirmDisableNotificationsDialog.value = true
+        } else {
+            confirmToggleNotificationsRequest()
         }
     }
 
-    fun deleteRequest(requestModel: RequestModel) {
-        viewModelScope.launch {
-            requestsRepository.deleteRequest(requestModel.id)
-            val updatedRequestsList = requests.value.toMutableList()
-            updatedRequestsList.removeIf { it.id == requestModel.id }
-            _requests.value = updatedRequestsList
+    fun confirmToggleNotificationsRequest() {
+        lastIndexToDisableNotifications?.let { indexSafe ->
+            viewModelScope.launch {
+                val updatedRequest = requestsRepository.updateRequest(requests.value[indexSafe])
+                val updatedRequestsList = requests.value.toMutableList()
+                updatedRequestsList[indexSafe] = updatedRequest
+                _requests.value = updatedRequestsList
 
-            // Vibrating
-            vibrationManager.shortSingleVibration()
+                // Vibrating
+                vibrationManager.shortSingleVibration()
+            }
         }
+        _showConfirmDisableNotificationsDialog.value = false
+    }
+
+    fun denyConfirmToggleNotificationsRequest() {
+        _showConfirmDisableNotificationsDialog.value = false
+        lastIndexToDisableNotifications = null
+    }
+
+    fun deleteRequest(requestModel: RequestModel) {
+        lastRequestToDelete = requestModel
+        _showConfirmDeleteRequestDialog.value = true
+    }
+
+    fun confirmDeleteRequest() {
+        lastRequestToDelete?.let { requestSafe ->
+            viewModelScope.launch {
+                requestsRepository.deleteRequest(requestSafe.id)
+                val updatedRequestsList = requests.value.toMutableList()
+                updatedRequestsList.removeIf { it.id == requestSafe.id }
+                _requests.value = updatedRequestsList
+
+                // Vibrating
+                vibrationManager.shortSingleVibration()
+            }
+        }
+        _showConfirmDeleteRequestDialog.value = false
+    }
+
+    fun denyDeleteRequest() {
+        _showConfirmDeleteRequestDialog.value = false
+        lastRequestToDelete = null
     }
 
     fun onPermissionRequestResult(wasGranted: Boolean) {

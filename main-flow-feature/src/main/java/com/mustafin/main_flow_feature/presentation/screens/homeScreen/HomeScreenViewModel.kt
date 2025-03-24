@@ -50,7 +50,7 @@ class HomeScreenViewModel(
         viewModelScope.launch {
             _loadingState.value = LoadingState.LOADING
             _requests.value = requestsRepository.getListOfRequests()
-            _loadingState.value = LoadingState.UPDATING
+//            _loadingState.value = LoadingState.UPDATING
             _requests.value = requestsRepository.updateResponseStatuses(requests.value)
             _loadingState.value = LoadingState.LOADED
         }

@@ -38,6 +38,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mustafin.main_flow_feature.R
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.NotificationsAreNotPermitted
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.requestView.RequestView
+import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.skeletons.RequestViewSkeleton
+import com.mustafin.main_flow_feature.utils.loading.LoadingState
 import com.mustafin.ui_components.presentation.alerts.ConfirmationAlert
 import com.mustafin.ui_components.presentation.buttons.CustomTinyButton
 import org.koin.androidx.compose.koinViewModel
@@ -48,6 +50,7 @@ fun HomeScreenView(
     navigateToAddRequestScreen: () -> Unit,
     viewModel: HomeScreenViewModel = koinViewModel()
 ) {
+    val loadingState = viewModel.loadingState.collectAsStateWithLifecycle()
     val requests = viewModel.requests.collectAsStateWithLifecycle()
     val notificationPermissionWasGranted =
         viewModel.notificationPermissionWasGranted.collectAsStateWithLifecycle()
@@ -143,15 +146,32 @@ fun HomeScreenView(
             }
         }
 
-        itemsIndexed(requests.value, key = { _, request -> request.id }) { index, request ->
-            Column {
-                RequestView(
-                    request = request,
-                    deleteRequest = { viewModel.deleteRequest(request) },
-                    toggleRequestNotifications = { viewModel.toggleNotificationsRequest(index) }
-                )
 
-                Spacer(modifier = Modifier.height(12.dp))
+        when (loadingState.value) {
+            LoadingState.LOADED -> {
+                itemsIndexed(requests.value, key = { _, request -> request.id }) { index, request ->
+                    Column {
+                        RequestView(
+                            request = request,
+                            deleteRequest = { viewModel.deleteRequest(request) },
+                            toggleRequestNotifications = {
+                                viewModel.toggleNotificationsRequest(
+                                    index
+                                )
+                            }
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+                    }
+                }
+            }
+
+            else -> {
+                items(4) {
+                    RequestViewSkeleton()
+
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
             }
         }
 

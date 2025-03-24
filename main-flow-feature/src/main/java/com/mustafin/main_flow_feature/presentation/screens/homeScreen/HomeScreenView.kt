@@ -22,8 +22,12 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -42,9 +46,12 @@ import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.skel
 import com.mustafin.main_flow_feature.utils.loading.LoadingState
 import com.mustafin.ui_components.presentation.alerts.ConfirmationAlert
 import com.mustafin.ui_components.presentation.buttons.CustomTinyButton
+import com.mustafin.ui_components.presentation.vibration.CustomVibrationManager
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 
 /* Home screen composable */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreenView(
     navigateToAddRequestScreen: () -> Unit,
@@ -74,6 +81,8 @@ fun HomeScreenView(
         }
     }
 
+    val vibrationManager: CustomVibrationManager = koinInject()
+
     LaunchedEffect(Unit) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             viewModel.checkNotificationPermissionsStatus()
@@ -81,102 +90,126 @@ fun HomeScreenView(
         }
     }
 
-    LazyColumn(
+    val state = rememberPullToRefreshState()
+    val isRefreshing = loadingState.value in listOf(LoadingState.LOADING, LoadingState.UPDATING)
+
+    PullToRefreshBox(
+        isRefreshing = isRefreshing,
+        onRefresh = {
+            vibrationManager.shortDoubleVibration()
+            viewModel.updateData()
+        },
+        state = state,
+        indicator = {
+            Indicator(
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .statusBarsPadding(),
+                isRefreshing = isRefreshing,
+                containerColor = colorResource(id = R.color.ternary_background),
+                color = colorResource(id = R.color.content),
+                state = state
+            )
+        },
         modifier = Modifier
             .fillMaxSize()
             .background(colorResource(id = R.color.background))
     ) {
-        item {
-            Spacer(
-                modifier = Modifier
-                    .statusBarsPadding()
-                    .height(12.dp)
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(id = R.string.all_requests_title),
-                    style = MaterialTheme.typography.displayLarge,
-                    color = colorResource(id = R.color.content),
-                    modifier = Modifier.weight(1f)
+        LazyColumn(Modifier.fillMaxSize()) {
+            item {
+                Spacer(
+                    modifier = Modifier
+                        .statusBarsPadding()
+                        .height(12.dp)
                 )
 
-                Spacer(modifier = Modifier.width(12.dp))
-
-                CustomTinyButton(
-                    text = stringResource(id = R.string.new_request_button_text),
-                    onClick = navigateToAddRequestScreen,
-                    icon = painterResource(id = R.drawable.plus)
-                )
-            }
-
-            notificationPermissionWasGranted.value?.let { notificationPermissionWasGrantedSafe ->
-                AnimatedVisibility(
-                    visible = !notificationPermissionWasGrantedSafe,
-                    exit = fadeOut() + shrinkVertically()
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Spacer(modifier = Modifier.height(12.dp))
-                    NotificationsAreNotPermitted {
-                        val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
-                            .putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-                        notificationSettingsLauncher.launch(intent)
+                    Text(
+                        text = stringResource(id = R.string.all_requests_title),
+                        style = MaterialTheme.typography.displayLarge,
+                        color = colorResource(id = R.color.content),
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    Spacer(modifier = Modifier.width(12.dp))
+
+                    CustomTinyButton(
+                        text = stringResource(id = R.string.new_request_button_text),
+                        onClick = navigateToAddRequestScreen,
+                        icon = painterResource(id = R.drawable.plus)
+                    )
+                }
+
+                notificationPermissionWasGranted.value?.let { notificationPermissionWasGrantedSafe ->
+                    AnimatedVisibility(
+                        visible = !notificationPermissionWasGrantedSafe,
+                        exit = fadeOut() + shrinkVertically()
+                    ) {
+                        Spacer(modifier = Modifier.height(12.dp))
+                        NotificationsAreNotPermitted {
+                            val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                                .putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                            notificationSettingsLauncher.launch(intent)
+                        }
                     }
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                if (requests.value.isEmpty()) {
+                    Spacer(modifier = Modifier.height(36.dp))
+
+                    Text(
+                        text = stringResource(id = R.string.empty_requests_list),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = colorResource(id = R.color.gray),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 12.dp)
+                    )
                 }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
 
-            if (requests.value.isEmpty()) {
-                Spacer(modifier = Modifier.height(36.dp))
-
-                Text(
-                    text = stringResource(id = R.string.empty_requests_list),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = colorResource(id = R.color.gray),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp)
-                )
-            }
-        }
-
-
-        when (loadingState.value) {
-            LoadingState.LOADED -> {
-                itemsIndexed(requests.value, key = { _, request -> request.id }) { index, request ->
-                    Column {
-                        RequestView(
-                            request = request,
-                            deleteRequest = { viewModel.deleteRequest(request) },
-                            toggleRequestNotifications = {
-                                viewModel.toggleNotificationsRequest(
-                                    index
-                                )
-                            }
-                        )
+            when (loadingState.value) {
+                LoadingState.LOADING -> {
+                    items(4) {
+                        RequestViewSkeleton()
 
                         Spacer(modifier = Modifier.height(12.dp))
                     }
                 }
-            }
 
-            else -> {
-                items(4) {
-                    RequestViewSkeleton()
+                else -> {
+                    itemsIndexed(
+                        requests.value,
+                        key = { _, request -> request.id }) { index, request ->
+                        Column {
+                            RequestView(
+                                request = request,
+                                deleteRequest = { viewModel.deleteRequest(request) },
+                                toggleRequestNotifications = {
+                                    viewModel.toggleNotificationsRequest(
+                                        index
+                                    )
+                                }
+                            )
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                            Spacer(modifier = Modifier.height(12.dp))
+                        }
+                    }
                 }
             }
-        }
 
-        item {
-            Spacer(modifier = Modifier.navigationBarsPadding())
+            item {
+                Spacer(modifier = Modifier.navigationBarsPadding())
+            }
         }
     }
 

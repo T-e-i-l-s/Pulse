@@ -10,8 +10,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,33 +18,30 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
-import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mustafin.main_flow_feature.R
+import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.HomeScreenHeaderView
+import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.HomeScreenPullToRefreshIndicatorView
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.NotificationsAreNotPermitted
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.requestView.RequestView
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.skeletons.RequestViewSkeleton
 import com.mustafin.main_flow_feature.utils.loading.LoadingState
 import com.mustafin.ui_components.presentation.alerts.ConfirmationAlert
-import com.mustafin.ui_components.presentation.buttons.CustomTinyButton
 import com.mustafin.ui_components.presentation.vibration.CustomVibrationManager
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -57,6 +53,10 @@ fun HomeScreenView(
     navigateToAddRequestScreen: () -> Unit,
     viewModel: HomeScreenViewModel = koinViewModel()
 ) {
+    val context = LocalContext.current
+
+    val vibrationManager: CustomVibrationManager = koinInject()
+
     val loadingState = viewModel.loadingState.collectAsStateWithLifecycle()
     val requests = viewModel.requests.collectAsStateWithLifecycle()
     val notificationPermissionWasGranted =
@@ -66,13 +66,13 @@ fun HomeScreenView(
     val showConfirmDeleteRequestDialog =
         viewModel.showConfirmDeleteRequestDialog.collectAsStateWithLifecycle()
 
-    val context = LocalContext.current
-
+    // Permission request window launcher
     val notificationPermissionRequestLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission(),
         viewModel::onPermissionRequestResult
     )
 
+    // App notifications settings launcher
     val notificationSettingsLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
@@ -81,41 +81,36 @@ fun HomeScreenView(
         }
     }
 
-    val vibrationManager: CustomVibrationManager = koinInject()
-
     LaunchedEffect(Unit) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Getting POST_NOTIFICATIONS permission if needed
             viewModel.checkNotificationPermissionsStatus()
             notificationPermissionRequestLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
     }
 
-    val state = rememberPullToRefreshState()
+    // Pull to refresh variables
+    val pullToRefreshState = rememberPullToRefreshState()
     val isRefreshing = loadingState.value in listOf(LoadingState.LOADING, LoadingState.UPDATING)
 
     PullToRefreshBox(
+        state = pullToRefreshState,
         isRefreshing = isRefreshing,
         onRefresh = {
             vibrationManager.shortDoubleVibration()
             viewModel.updateData()
         },
-        state = state,
         indicator = {
-            Indicator(
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .statusBarsPadding(),
+            HomeScreenPullToRefreshIndicatorView(
                 isRefreshing = isRefreshing,
-                containerColor = colorResource(id = R.color.ternary_background),
-                color = colorResource(id = R.color.content),
-                state = state
+                state = pullToRefreshState
             )
         },
         modifier = Modifier
             .fillMaxSize()
             .background(colorResource(id = R.color.background))
     ) {
-        LazyColumn(Modifier.fillMaxSize()) {
+        LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             item {
                 Spacer(
                     modifier = Modifier
@@ -123,27 +118,7 @@ fun HomeScreenView(
                         .height(12.dp)
                 )
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.all_requests_title),
-                        style = MaterialTheme.typography.displayLarge,
-                        color = colorResource(id = R.color.content),
-                        modifier = Modifier.weight(1f)
-                    )
-
-                    Spacer(modifier = Modifier.width(12.dp))
-
-                    CustomTinyButton(
-                        text = stringResource(id = R.string.new_request_button_text),
-                        onClick = navigateToAddRequestScreen,
-                        icon = painterResource(id = R.drawable.plus)
-                    )
-                }
+                HomeScreenHeaderView(navigateToAddRequestScreen)
 
                 notificationPermissionWasGranted.value?.let { notificationPermissionWasGrantedSafe ->
                     AnimatedVisibility(
@@ -151,6 +126,7 @@ fun HomeScreenView(
                         exit = fadeOut() + shrinkVertically()
                     ) {
                         Spacer(modifier = Modifier.height(12.dp))
+
                         NotificationsAreNotPermitted {
                             val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
                                 .putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
@@ -181,8 +157,6 @@ fun HomeScreenView(
                 LoadingState.LOADING -> {
                     items(4) {
                         RequestViewSkeleton()
-
-                        Spacer(modifier = Modifier.height(12.dp))
                     }
                 }
 
@@ -190,19 +164,13 @@ fun HomeScreenView(
                     itemsIndexed(
                         requests.value,
                         key = { _, request -> request.id }) { index, request ->
-                        Column {
-                            RequestView(
-                                request = request,
-                                deleteRequest = { viewModel.deleteRequest(request) },
-                                toggleRequestNotifications = {
-                                    viewModel.toggleNotificationsRequest(
-                                        index
-                                    )
-                                }
-                            )
-
-                            Spacer(modifier = Modifier.height(12.dp))
-                        }
+                        RequestView(
+                            request = request,
+                            deleteRequest = { viewModel.deleteRequest(request) },
+                            toggleRequestNotifications = {
+                                viewModel.toggleNotificationsRequest(index)
+                            }
+                        )
                     }
                 }
             }

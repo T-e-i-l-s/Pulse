@@ -16,7 +16,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import com.mustafin.ui_components.R
 
-/* Composable of material Text Field with custom UI */
+/* Composable of material Text Field with custom styles for full screen width */
 @Composable
 fun FullWidthTextField(
     value: String,

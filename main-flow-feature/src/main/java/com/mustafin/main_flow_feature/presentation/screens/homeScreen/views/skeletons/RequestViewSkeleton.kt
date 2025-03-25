@@ -17,13 +17,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mustafin.main_flow_feature.R
 import com.mustafin.ui_components.presentation.loaders.SkeletonLoader
 
+/* Composable function that displays a skeleton loader for the RequestView */
 @Composable
 fun RequestViewSkeleton() {
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -42,6 +43,7 @@ fun RequestViewSkeleton() {
                     .size(height = 20.dp, width = 200.dp)
                     .clip(CircleShape)
             )
+            
             SkeletonLoader(
                 Modifier
                     .size(height = 20.dp, width = 100.dp)
@@ -84,4 +86,10 @@ fun RequestViewSkeleton() {
             )
         }
     }
+}
+
+@Composable
+@Preview
+private fun Preview() {
+    RequestViewSkeleton()
 }

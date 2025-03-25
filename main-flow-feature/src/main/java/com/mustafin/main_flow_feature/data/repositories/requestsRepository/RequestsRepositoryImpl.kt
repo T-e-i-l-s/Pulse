@@ -31,7 +31,7 @@ class RequestsRepositoryImpl(
         }
     }
 
-    override suspend fun updateRequest(request: RequestModel): RequestModel {
+    override suspend fun toggleNotifications(request: RequestModel): RequestModel {
         val updatedRequest = request.copy(notificationsEnabled = !request.notificationsEnabled)
         requestsDao.insertRequest(updatedRequest.mapToRequestsEntity())
         return updatedRequest

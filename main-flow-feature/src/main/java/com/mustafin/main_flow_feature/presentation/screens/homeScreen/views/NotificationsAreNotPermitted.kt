@@ -1,10 +1,15 @@
 package com.mustafin.main_flow_feature.presentation.screens.homeScreen.views
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -19,36 +24,55 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mustafin.main_flow_feature.R
 
 /* Composable with a warning that applications cannot send notifications */
 @Composable
-fun NotificationsAreNotPermitted(openNotificationSettings: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 12.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .background(colorResource(id = R.color.red).copy(0.2f))
-            .clickable(onClick = openNotificationSettings)
-            .padding(12.dp),
-        verticalAlignment = Alignment.CenterVertically
+fun NotificationsAreNotPermitted(
+    visible: Boolean,
+    openNotificationSettings: () -> Unit
+) {
+    AnimatedVisibility(
+        visible = !visible,
+        exit = fadeOut() + shrinkVertically()
     ) {
-        Icon(
-            painter = painterResource(id = R.drawable.alert_circle),
-            contentDescription = null,
-            tint = colorResource(id = R.color.content),
-            modifier = Modifier.size(26.dp)
-        )
+        Column {
+            Spacer(modifier = Modifier.height(12.dp))
 
-        Spacer(modifier = Modifier.width(12.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(colorResource(id = R.color.red).copy(0.2f))
+                    .clickable(onClick = openNotificationSettings)
+                    .padding(12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.alert_circle),
+                    contentDescription = null,
+                    tint = colorResource(id = R.color.content),
+                    modifier = Modifier.size(26.dp)
+                )
 
-        Text(
-            text = stringResource(id = R.string.notification_permission_not_granted),
-            style = MaterialTheme.typography.labelMedium,
-            color = colorResource(id = R.color.content),
-            modifier = Modifier.weight(1f)
-        )
+                Spacer(modifier = Modifier.width(12.dp))
+
+                Text(
+                    text = stringResource(id = R.string.notification_permission_not_granted),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = colorResource(id = R.color.content),
+                    modifier = Modifier.weight(1f)
+                )
+            }
+        }
     }
+}
+
+@Composable
+@Preview
+private fun Preview() {
+    NotificationsAreNotPermitted(visible = true) {}
 }

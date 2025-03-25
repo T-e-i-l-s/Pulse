@@ -7,7 +7,7 @@ interface RequestsRepository {
 
     suspend fun updateResponseStatuses(requests: List<RequestModel>): List<RequestModel>
 
-    suspend fun updateRequest(request: RequestModel): RequestModel
+    suspend fun toggleNotifications(request: RequestModel): RequestModel
 
     suspend fun addRequest(request: RequestModel)
 

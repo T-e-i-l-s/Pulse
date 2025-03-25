@@ -7,7 +7,7 @@
     <string name="request_was_not_completed">Unavailable</string>
     <string name="service_unavailable">Service unavailable</string>
     <string name="updated_at">Updated at</string>
-    <string name="notification_permission_not_granted">You haven\'t allowed notifications, so please click to enable them and receive important updates.</string>
+    <string name="notification_permission_not_granted">Tap here to enable notifications and stay informed when something needs your attention.</string>
     <string name="confirm_delete_request_dialog_title">Delete request</string>
     <string name="confirm_delete_request_dialog_text">Are you sure you want ot delete request?</string>
     <string name="confirm_delete_request_dialog_confirm_button_text">Delete</string>

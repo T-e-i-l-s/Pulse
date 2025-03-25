@@ -1,8 +1,12 @@
 package com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.requestView
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -16,13 +20,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mustafin.main_flow_feature.R
+import com.mustafin.main_flow_feature.utils.time.toSimpleTimeString
 import com.mustafin.ping_feature.utils.http.HttpResponseStatusModel
 import java.time.LocalDateTime
 
-/* View with short information about server response status*/
+/* View with short information about server response status */
 @Composable
-fun ResponseStatusView(responseStatus: HttpResponseStatusModel) {
-    responseStatus.statusCode?.let { responseStatusCodeSafe ->
+fun ResponseStatusView(responseStatus: HttpResponseStatusModel?) {
+    responseStatus?.statusCode?.let { responseStatusCodeSafe ->
         val contentColor = if (responseStatusCodeSafe >= 500) {
             colorResource(id = R.color.yellow)
         } else if (responseStatusCodeSafe >= 400) {
@@ -34,45 +39,50 @@ fun ResponseStatusView(responseStatus: HttpResponseStatusModel) {
         }
 
         Row(
-            modifier = Modifier
-                .clip(CircleShape)
-                .background(contentColor.copy(0.1f))
-                .padding(horizontal = 8.dp, vertical = 4.dp),
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "$responseStatusCodeSafe",
-                style = MaterialTheme.typography.titleSmall,
-                color = contentColor,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                text = stringResource(id = R.string.updated_at) + " " +
+                        responseStatus.updatedAt.toSimpleTimeString(),
+                style = MaterialTheme.typography.labelMedium,
+                color = colorResource(id = R.color.gray),
+                modifier = Modifier.weight(1f)
             )
 
-            if (!responseStatus.message.isNullOrBlank()) {
+            Spacer(modifier = Modifier.width(8.dp))
+            Row(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(contentColor.copy(0.1f))
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(
-                    text = " • ${responseStatus.message}",
+                    text = "$responseStatusCodeSafe",
                     style = MaterialTheme.typography.titleSmall,
                     color = contentColor,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
+
+                if (!responseStatus.message.isNullOrBlank()) {
+                    Text(
+                        text = " • ${responseStatus.message}",
+                        style = MaterialTheme.typography.titleSmall,
+                        color = contentColor,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
         }
-    } ?: Row(
-        modifier = Modifier
-            .clip(CircleShape)
-            .background(colorResource(id = R.color.ternary_background))
-            .padding(horizontal = 8.dp, vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = stringResource(id = R.string.request_was_not_completed),
-            style = MaterialTheme.typography.titleSmall,
-            color = colorResource(id = R.color.gray),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-    }
+    } ?: Text(
+        text = stringResource(id = R.string.service_unavailable),
+        style = MaterialTheme.typography.labelMedium,
+        color = colorResource(id = R.color.gray)
+    )
 }
 
 @Composable

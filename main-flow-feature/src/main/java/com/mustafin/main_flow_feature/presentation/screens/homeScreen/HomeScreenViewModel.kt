@@ -31,17 +31,6 @@ class HomeScreenViewModel(
     private val _requests = MutableStateFlow<List<RequestModel>>(emptyList())
     val requests: StateFlow<List<RequestModel>> = _requests
 
-    private var lastIndexToDisableNotifications: Int? = null
-
-    private val _showConfirmDisableNotificationsDialog = MutableStateFlow(false)
-    val showConfirmDisableNotificationsDialog: StateFlow<Boolean> =
-        _showConfirmDisableNotificationsDialog
-
-    private var lastRequestToDelete: RequestModel? = null
-
-    private val _showConfirmDeleteRequestDialog = MutableStateFlow(false)
-    val showConfirmDeleteRequestDialog: StateFlow<Boolean> = _showConfirmDeleteRequestDialog
-
     init {
         loadData()
     }
@@ -62,60 +51,6 @@ class HomeScreenViewModel(
         }
     }
 
-    fun toggleNotificationsRequest(index: Int) {
-        lastIndexToDisableNotifications = index
-        if (requests.value[index].notificationsEnabled) {
-            _showConfirmDisableNotificationsDialog.value = true
-        } else {
-            confirmToggleNotificationsRequest()
-        }
-    }
-
-    fun confirmToggleNotificationsRequest() {
-        lastIndexToDisableNotifications?.let { indexSafe ->
-            viewModelScope.launch {
-                val updatedRequest = requestsRepository.updateRequest(requests.value[indexSafe])
-                val updatedRequestsList = requests.value.toMutableList()
-                updatedRequestsList[indexSafe] = updatedRequest
-                _requests.value = updatedRequestsList
-
-                // Vibrating
-                vibrationManager.shortSingleVibration()
-            }
-        }
-        _showConfirmDisableNotificationsDialog.value = false
-    }
-
-    fun denyConfirmToggleNotificationsRequest() {
-        _showConfirmDisableNotificationsDialog.value = false
-        lastIndexToDisableNotifications = null
-    }
-
-    fun deleteRequest(requestModel: RequestModel) {
-        lastRequestToDelete = requestModel
-        _showConfirmDeleteRequestDialog.value = true
-    }
-
-    fun confirmDeleteRequest() {
-        lastRequestToDelete?.let { requestSafe ->
-            viewModelScope.launch {
-                requestsRepository.deleteRequest(requestSafe.id)
-                val updatedRequestsList = requests.value.toMutableList()
-                updatedRequestsList.removeIf { it.id == requestSafe.id }
-                _requests.value = updatedRequestsList
-
-                // Vibrating
-                vibrationManager.shortSingleVibration()
-            }
-        }
-        _showConfirmDeleteRequestDialog.value = false
-    }
-
-    fun denyDeleteRequest() {
-        _showConfirmDeleteRequestDialog.value = false
-        lastRequestToDelete = null
-    }
-
     fun onPermissionRequestResult(wasGranted: Boolean) {
         _notificationPermissionWasGranted.value = wasGranted
     }
@@ -127,5 +62,80 @@ class HomeScreenViewModel(
                 application.applicationContext,
                 Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    // Delete and toggle notifications features implementation
+
+    private var lastRequestIndexToDisableNotifications: Int? = null
+
+    private val _showConfirmDisableNotificationsDialog = MutableStateFlow(false)
+    val showConfirmDisableNotificationsDialog: StateFlow<Boolean> =
+        _showConfirmDisableNotificationsDialog
+
+    private var lastRequestIndexToDelete: Int? = null
+
+    private val _showConfirmDeleteRequestDialog = MutableStateFlow(false)
+    val showConfirmDeleteRequestDialog: StateFlow<Boolean> = _showConfirmDeleteRequestDialog
+
+
+    fun toggleNotifications(index: Int) {
+        lastRequestIndexToDisableNotifications = index
+        if (requests.value[index].notificationsEnabled) {
+            /*
+            If notifications are enabled, we prompt the user for confirmation before disabling them.
+            */
+            _showConfirmDisableNotificationsDialog.value = true
+        } else {
+            /*
+            If notifications are disabled, we enable them directly without asking the user
+            for confirmation, as there's no need to confirm enabling them.
+            */
+            confirmToggleNotificationsRequest()
+        }
+    }
+
+    fun confirmToggleNotificationsRequest() {
+        lastRequestIndexToDisableNotifications?.let { requestIndexSafe ->
+            viewModelScope.launch {
+                val updatedRequest =
+                    requestsRepository.toggleNotifications(requests.value[requestIndexSafe])
+                val updatedRequestsList = requests.value.toMutableList()
+                updatedRequestsList[requestIndexSafe] = updatedRequest
+                _requests.value = updatedRequestsList
+
+                // Vibrating
+                vibrationManager.shortSingleVibration()
+            }
+        }
+        _showConfirmDisableNotificationsDialog.value = false
+    }
+
+    fun denyConfirmToggleNotificationsRequest() {
+        _showConfirmDisableNotificationsDialog.value = false
+    }
+
+    fun deleteRequest(index: Int) {
+        // Asking user's permission to delete provided request
+        _showConfirmDeleteRequestDialog.value = true
+        lastRequestIndexToDelete = index
+    }
+
+    fun confirmDeleteRequest() {
+        lastRequestIndexToDelete?.let { requestIndexSafe ->
+            viewModelScope.launch {
+                requestsRepository.deleteRequest(requests.value[requestIndexSafe].id)
+                val updatedRequestsList = requests.value.toMutableList()
+                updatedRequestsList.removeAt(requestIndexSafe)
+                _requests.value = updatedRequestsList
+
+                // Vibrating
+                vibrationManager.shortSingleVibration()
+            }
+        }
+        _showConfirmDeleteRequestDialog.value = false
+    }
+
+    fun denyDeleteRequest() {
+        _showConfirmDeleteRequestDialog.value = false
     }
 }

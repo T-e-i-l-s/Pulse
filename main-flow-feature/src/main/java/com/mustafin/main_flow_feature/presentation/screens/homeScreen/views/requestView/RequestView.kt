@@ -1,7 +1,6 @@
 package com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.requestView
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,13 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mustafin.main_flow_feature.R
 import com.mustafin.main_flow_feature.utils.requests.RequestModel
-import com.mustafin.main_flow_feature.utils.time.toSimpleTimeString
 import java.time.LocalDateTime
 
 /* Composable of view with information about the request */
@@ -45,34 +42,9 @@ fun RequestView(
             .background(colorResource(id = R.color.secondary_background))
             .padding(12.dp)
     ) {
-        request.lastResponseStatus?.let { responseStatusSafe ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(id = R.string.updated_at) + " " +
-                            responseStatusSafe.updatedAt.toSimpleTimeString(),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = colorResource(id = R.color.gray),
-                    modifier = Modifier.weight(1f)
-                )
+        ResponseStatusView(request.lastResponseStatus)
 
-                Spacer(modifier = Modifier.width(8.dp))
-
-                ResponseStatusView(responseStatusSafe)
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-        } ?: Column {
-            Text(
-                text = stringResource(id = R.string.service_unavailable),
-                style = MaterialTheme.typography.labelMedium,
-                color = colorResource(id = R.color.gray)
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-        }
+        Spacer(modifier = Modifier.height(12.dp))
 
         Text(
             text = request.title,

@@ -5,7 +5,10 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.VibratorManager
 
-/* Class that helps to use Vibrator class */
+/*
+Class that helps to use Vibrator class.
+!!! Device with api < 31 won't vibrate because of haptic absence.
+*/
 class CustomVibrationManager(context: Context) {
     private val vibrator =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

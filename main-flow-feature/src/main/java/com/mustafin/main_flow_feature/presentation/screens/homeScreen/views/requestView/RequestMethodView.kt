@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mustafin.ping_feature.utils.http.HttpMethod
 
-/* Composable that contains small text with request type */
+/* Composable that contains small text indicating request method */
 @Composable
 fun RequestMethodView(requestMethod: HttpMethod) {
     val contentColor = colorResource(id = requestMethod.colorRes)

@@ -26,19 +26,19 @@ jobs:
         run: chmod +x gradlew
 
       - name: Decode Keystore
-        run: echo "${{ secrets.KEYSTORE }}" | base64 --decode > $HOME/pulse-key.jks
+        run: echo "${{ secrets.KEYSTORE }}" | base64 --decode > app/keystore.jks
+
+      - name: Verify Keystore Exists
+        run: ls -lah app/
 
       - name: Set up Keystore environment
         run: |
-          echo "KEYSTORE_PATH=$HOME/pulse-key.jks" >> $GITHUB_ENV
+          echo "KEYSTORE_PATH=app/keystore.jks" >> $GITHUB_ENV
           echo "KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}" >> $GITHUB_ENV
           echo "KEY_ALIAS=${{ secrets.KEY_ALIAS }}" >> $GITHUB_ENV
           echo "KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}" >> $GITHUB_ENV
 
-      - name: Debug Keystore File
-        run: ls -lah $HOME
-
-      - name: Stop Gradle Daemon (если предыдущий процесс завис)
+      - name: Stop Gradle Daemon (если завис)
         run: ./gradlew --stop || true
 
       - name: Cache Gradle dependencies

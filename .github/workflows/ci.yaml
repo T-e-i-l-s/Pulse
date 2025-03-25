@@ -28,18 +28,12 @@ jobs:
       - name: Decode Keystore
         run: echo "${{ secrets.KEYSTORE }}" | base64 --decode > app/keystore.jks
 
-      - name: Verify Keystore Exists
-        run: ls -lah app/
-
       - name: Set up Keystore environment
         run: |
           echo "KEYSTORE_PATH=$GITHUB_WORKSPACE/app/keystore.jks" >> $GITHUB_ENV
           echo "KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}" >> $GITHUB_ENV
           echo "KEY_ALIAS=${{ secrets.KEY_ALIAS }}" >> $GITHUB_ENV
           echo "KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}" >> $GITHUB_ENV
-
-      - name: Stop Gradle Daemon (если завис)
-        run: ./gradlew --stop || true
 
       - name: Cache Gradle dependencies
         uses: actions/cache@v3
@@ -59,9 +53,6 @@ jobs:
       - name: Build Debug APK
         run: ./gradlew assembleDebug
 
-      - name: Log APK location (Debug)
-        run: ls -lah app/build/outputs/apk/debug/
-
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
@@ -71,9 +62,6 @@ jobs:
 
       - name: Build Signed Release APK
         run: ./gradlew assembleRelease
-
-      - name: Log APK location (Release)
-        run: ls -lah app/build/outputs/apk/release/
 
       - name: Upload Signed Release APK
         uses: actions/upload-artifact@v4

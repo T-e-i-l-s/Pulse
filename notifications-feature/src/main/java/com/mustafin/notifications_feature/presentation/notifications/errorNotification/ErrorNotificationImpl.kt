@@ -1,8 +1,11 @@
 package com.mustafin.notifications_feature.presentation.notifications.errorNotification
 
 import android.Manifest
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -30,6 +33,16 @@ class ErrorNotificationImpl(private val context: Context) : ErrorNotification {
                 }
             ))
             setSmallIcon(R.drawable.error_icon)
+
+            // Creating intent to open app on click
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("pulse://root"))
+            val pendingIntent = PendingIntent.getActivity(
+                context,
+                0,
+                intent,
+                PendingIntent.FLAG_IMMUTABLE
+            )
+            setContentIntent(pendingIntent)
         }
 
         if (

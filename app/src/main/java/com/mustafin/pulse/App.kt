@@ -7,7 +7,6 @@ import com.mustafin.local_data_source.di.localDataSourceModule
 import com.mustafin.main_flow_feature.di.mainFlowModule
 import com.mustafin.notifications_feature.data.notifacations.NotificationChannelManager
 import com.mustafin.notifications_feature.di.notificationsFeatureModule
-import com.mustafin.notifications_feature.presentation.notifications.errorNotification.ErrorNotification
 import com.mustafin.ping_feature.di.pingModule
 import com.mustafin.ui_components.di.uiComponentsModule
 import org.koin.android.ext.koin.androidContext
@@ -20,10 +19,6 @@ class App : Application() {
     )
     private val notificationChannelManager: NotificationChannelManager by inject(
         NotificationChannelManager::class.java
-    )
-
-    private val errorNotification: ErrorNotification by inject(
-        ErrorNotification::class.java
     )
 
     override fun onCreate() {

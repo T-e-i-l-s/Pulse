@@ -19,6 +19,7 @@ class RequestsRepositoryImpl(
     }
 
     override suspend fun updateResponseStatuses(requests: List<RequestModel>): List<RequestModel> {
+        // Asynchronously executing all requests and saving new response statuses
         return coroutineScope {
             requests.map {
                 async {

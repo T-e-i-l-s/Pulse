@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mustafin.ping_feature.utils.http.HttpMethod
 
-/* Composable with request method selector */
+/* Composable for selecting an HTTP request method */
 @Composable
 fun RequestMethodSelectorView(
     selectedMethod: HttpMethod?,

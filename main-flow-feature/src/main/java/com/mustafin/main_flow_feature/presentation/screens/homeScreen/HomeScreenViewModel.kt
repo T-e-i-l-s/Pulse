@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-/* View model of home screen */
+/* View model for the home screen */
 class HomeScreenViewModel(
     private val application: Application,
     private val vibrationManager: CustomVibrationManager,

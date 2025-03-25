@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-/* View model of create new request screen */
+/* View model for the "Create New Request screen */
 class AddRequestScreenViewModel(
     private val requestsRepository: RequestsRepository,
     private val vibrationManager: CustomVibrationManager

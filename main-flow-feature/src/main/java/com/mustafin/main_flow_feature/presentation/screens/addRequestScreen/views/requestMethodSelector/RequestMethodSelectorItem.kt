@@ -17,14 +17,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mustafin.main_flow_feature.R
 import com.mustafin.ping_feature.utils.http.HttpMethod
 
-/* Composable that presents type of HTTP-request(GET, POST and etc.) */
+/* Composable for displaying the HTTP request method (e.g., GET, POST, etc.) */
 @Composable
 fun RequestMethodSelectorItem(
-    requestMethod: com.mustafin.ping_feature.utils.http.HttpMethod,
+    requestMethod: HttpMethod,
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
@@ -54,5 +55,25 @@ fun RequestMethodSelectorItem(
                 tint = contentColor
             )
         }
+    }
+}
+
+@Composable
+@Preview
+private fun Preview() {
+    Row {
+        RequestMethodSelectorItem(
+            requestMethod = HttpMethod.GET,
+            isSelected = true,
+            onClick = {}
+        )
+
+        Spacer(modifier = Modifier.width(12.dp))
+
+        RequestMethodSelectorItem(
+            requestMethod = HttpMethod.GET,
+            isSelected = false,
+            onClick = {}
+        )
     }
 }

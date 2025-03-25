@@ -26,7 +26,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Decode Keystore
-        run: echo "${{ secrets.ANDROID_KEYSTORE }}" | base64 --decode > $HOME/pulse-key.jks
+        run: echo "${{ secrets.KEYSTORE }}" | base64 --decode > $HOME/pulse-key.jks
 
       - name: Set up Keystore environment
         run: |

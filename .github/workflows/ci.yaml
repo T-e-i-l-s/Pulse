@@ -35,6 +35,9 @@ jobs:
           echo "KEY_ALIAS=${{ secrets.KEY_ALIAS }}" >> $GITHUB_ENV
           echo "KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}" >> $GITHUB_ENV
 
+      - name: Debug Keystore File
+        run: ls -lah $HOME
+
       - name: Build with Gradle
         run: ./gradlew build
 

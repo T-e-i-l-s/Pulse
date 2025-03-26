@@ -4,7 +4,7 @@ Pulse is an **open-source**, modern Android application that helps monitor serve
 
 Built with **Jetpack Compose**, the application provides a modern **UI** with high responsiveness. The minimum supported Android version is **8 (API 26)**.
 
-![](C:\Users\kmous\Development\MyProjects\Pulse\images\063f79fb88b61ce46a8cf7856d7f52f0472f23b0.png)
+![](./images/063f79fb88b61ce46a8cf7856d7f52f0472f23b0.png)
 
 ## ⏬ Installation
 

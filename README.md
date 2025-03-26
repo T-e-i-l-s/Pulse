@@ -1,45 +1,67 @@
 # Pulse
 
-Pulse is an opensource modern Android application that helps monitor server status and notifies
-users when
-something goes wrong. Users can create requests specifying the type (GET, POST, etc.) and URL. The
-system periodically checks the server status and sends a notification if the response code is 400 or
-higher.
+Pulse is an **open-source**, modern Android application that helps monitor server status and notifies users when something goes wrong. Users can create requests by specifying the type (**GET, POST, etc.**) and URL. The system periodically checks the server status and sends a notification if the response code is **400 or higher**.
 
-## Installation
+Built with **Jetpack Compose**, the application provides a modern **UI** with high responsiveness. The minimum supported Android version is **8 (API 26)**.
 
-### There are several ways to get release .apk of Pulse application:
+![](C:\Users\kmous\Development\MyProjects\Pulse\images\063f79fb88b61ce46a8cf7856d7f52f0472f23b0.png)
 
-##### 1. Download package from [GitHub Releases](https://github.com/T-e-i-l-s/Pulse/releases)
+## ⏬ Installation
 
-This is the fastest way. In [Releases](https://github.com/T-e-i-l-s/Pulse/releases) you can find all
-release versions of Pulse.
+There are several ways to get the **release .apk** of the Pulse application:
 
-##### 2. Downloading package from last CI Job
+#### 1. Download from [GitHub Releases](https://github.com/T-e-i-l-s/Pulse/releases)
 
-This approach is more flexible than the first one because you can get both release and debug
-versions. Also you can download package from develop and other branches if you want to get some
-specific experience. **We recommend to use last version from main branch because it's more
-stable.**
+The fastest way is to download the package from [Releases](https://github.com/T-e-i-l-s/Pulse/releases), where you can find all available versions of Pulse.
 
-##### 3. Build project by your own
+#### 2. Download from the latest CI Job
 
-The hardest way which provides you full control of the build process. To do this clone repository
-and run build process from Android Studio.
+This method is more flexible than the first one because it allows you to get both **release** and **debug** versions. You can also download builds from the **develop** branch or other branches to test specific features.
 
-## Development & Testing
+⚠️ **We recommend using the latest version from the `main` branch, as it is the most stable.**
 
-Please see our development docs for full details regarding work on the Pulse source code.
+#### 3. Build the project yourself
 
-If you are looking to add some new functionality we would be fun to provide you any help.
+This is the most complex method but gives you full control over the build process.
 
-### Short project info
+To build Pulse from source:
 
-- Min SDK = 26 (Android 8)
-- Jetpack Compose
-- MVVM Architecture
+1. Clone the repository
 
-## Licence
+2. Open the project in **Android Studio**
 
-Pulse application is provided
-under [MIT Licence](https://github.com/T-e-i-l-s/Pulse/blob/main/LICENSE).
+3. Run the build process
+
+**Enjoy using Pulse! 🚀**
+
+## 🧑‍💻 Development & Testing
+
+Please refer to our [development documentation](#) for full details on working with the Pulse source code.
+
+If you would like to add new functionality, please submit a **pull request (PR)** to the repository:
+
+1. **Fork** the repository and clone it locally.
+
+2. Create a new branch (`feature/my-new-feature`).
+
+3. Make your changes and commit them with clear messages.
+
+4. Ensure that the **CI job completes successfully**.
+
+5. Open a PR to the `develop` branch, providing a detailed description of your changes. Once the changes are reviewed and tested, we will merge them into the `main` branch.
+
+You can also **open an issue** to request new functionality or report a bug:
+
+- Clearly describe the issue or proposed feature.
+
+- Explain how it would improve the project.
+
+- If applicable, provide examples or links to relevant resources.
+
+We will review your request and provide feedback.
+
+**Thank you for contributing to Pulse!** 🚀
+
+## 📃 License
+
+Pulse is provided under the [MIT License](https://github.com/T-e-i-l-s/Pulse/blob/main/LICENSE).

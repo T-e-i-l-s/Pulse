@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Error notification -->
+    <string name="error_notification_channel_name">Ошибки</string>
+    <string name="error_notification_channel_description">
+        Уведомления, которые появляются, когда статус ответа сервиса 400+
+    </string>
+    <string name="error_notification_title">Что-то не так</string>
+    <string name="error_notification_text">%1$s %2$s -> %3$d %4$s</string>
+</resources>

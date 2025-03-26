@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Home Screen -->
+    <string name="all_requests_title">Мои запросы</string>
+    <string name="new_request_button_text">Создать</string>
+    <string name="empty_requests_list">Запросов пока нет</string>
+    <string name="request_was_not_completed">Недоступно</string>
+    <string name="service_unavailable">Сервис недоступен</string>
+    <string name="updated_at">Обновлено</string>
+    <string name="notification_permission_not_granted">Нажмите здесь, чтобы включить уведомления и быть в курсе, когда что-то требует вашего внимания.</string>
+    <string name="confirm_delete_request_dialog_title">Удаление запроса</string>
+    <string name="confirm_delete_request_dialog_text">Вы уверены, что хотите удалить запрос?</string>
+    <string name="confirm_delete_request_dialog_confirm_button_text">Удалить</string>
+    <string name="confirm_delete_request_dialog_deny_button_text">Отмена</string>
+    <string name="confirm_disable_notifications_request_dialog_title">Отключить уведомления</string>
+    <string name="confirm_disable_notifications_request_dialog_text">Вы уверены, что хотите отключить уведомления для этого запроса?</string>
+    <string name="confirm_disable_notifications_request_dialog_confirm_button_text">Отключить</string>
+    <string name="confirm_disable_notifications_request_dialog_deny_button_text">Отмена</string>
+
+    <!-- Add Request Screen -->
+    <string name="add_request_screen_title">Новый запрос</string>
+    <string name="url_text_field_placeholder">URL запроса</string>
+    <string name="notifications_enabled_text">Уведомлять, если что-то не так</string>
+    <string name="request_url_validation_error_text">Неверный формат URL. URL должен начинаться с "http://" или "https://", содержать действительный домен и заканчиваться на "/".</string>
+    <string name="title_of_request_input_placeholder">Заголовок</string>
+    <string name="description_of_request_input_placeholder">Описание</string>
+    <string name="add_request_button_text">Создать</string>
+</resources>

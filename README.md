@@ -36,8 +36,6 @@ To build Pulse from source:
 
 ## 🧑‍💻 Development & Testing
 
-Please refer to our [development documentation](#) for full details on working with the Pulse source code.
-
 If you would like to add new functionality, please submit a **pull request (PR)** to the repository:
 
 1. **Fork** the repository and clone it locally.

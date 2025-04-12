@@ -28,7 +28,7 @@ class ErrorNotificationImpl(private val context: Context) : ErrorNotification {
                         it.requestMethod,
                         it.url,
                         it.statusCode ?: "",
-                        it.message ?: R.string.service_unavailable
+                        it.message ?: context.getString(R.string.service_unavailable)
                     )
                 }
             ))

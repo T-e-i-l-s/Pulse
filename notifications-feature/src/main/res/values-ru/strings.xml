@@ -7,5 +7,5 @@
     </string>
     <string name="error_notification_title">Что-то не так</string>
     <string name="error_notification_text">%1$s %2$s -> %3$s %4$s</string>
-    <string name="service_unavailable">Сервис не доступен</string>
+    <string name="service_unavailable">Сервис недоступен</string>
 </resources>

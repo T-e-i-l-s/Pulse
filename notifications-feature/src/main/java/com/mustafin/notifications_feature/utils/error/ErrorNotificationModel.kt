@@ -4,6 +4,6 @@ package com.mustafin.notifications_feature.utils.error
 data class ErrorNotificationModel(
     val url: String,
     val requestMethod: String,
-    val statusCode: Int,
-    val message: String
+    val statusCode: Int?,
+    val message: String?
 )

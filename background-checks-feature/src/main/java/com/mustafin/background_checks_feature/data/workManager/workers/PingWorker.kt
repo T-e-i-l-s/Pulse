@@ -35,19 +35,19 @@ class PingWorker(
                     async {
                         val updatedRequestEntity = checkAnService(request)
 
-                        updatedRequestEntity.lastResponseStatus?.statusCode?.let { statusCodeSafe ->
-                            updatedRequestEntity.lastResponseStatus?.message?.let { messageSafe ->
-                                if (statusCodeSafe >= 400 && updatedRequestEntity.notificationsEnabled) {
-                                    errors.add(
-                                        ErrorNotificationModel(
-                                            updatedRequestEntity.httpRequestInfo.url,
-                                            updatedRequestEntity.httpRequestInfo.httpMethod.toString(),
-                                            statusCodeSafe,
-                                            messageSafe
-                                        )
-                                    )
-                                }
-                            }
+                        val statusCode = updatedRequestEntity.lastResponseStatus?.statusCode
+                        if (
+                            (statusCode == null || statusCode >= 400) &&
+                            updatedRequestEntity.notificationsEnabled
+                        ) {
+                            errors.add(
+                                ErrorNotificationModel(
+                                    updatedRequestEntity.httpRequestInfo.url,
+                                    updatedRequestEntity.httpRequestInfo.httpMethod.toString(),
+                                    updatedRequestEntity.lastResponseStatus?.statusCode,
+                                    updatedRequestEntity.lastResponseStatus?.message
+                                )
+                            )
                         }
                     }
                 }.awaitAll()

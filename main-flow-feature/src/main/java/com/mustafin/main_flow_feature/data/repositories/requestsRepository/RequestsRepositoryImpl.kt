@@ -24,12 +24,8 @@ class RequestsRepositoryImpl(
             requests.map { request ->
                 async {
                     val newResponseStatus = pingRepository.ping(request.httpRequestInfo)
-
-                    val updatedResponseStatusesList = request.responseStatuses.toMutableList()
-                    updatedResponseStatusesList.add(newResponseStatus)
-
                     val updatedRequest =
-                        request.copy(responseStatuses = updatedResponseStatusesList)
+                        request.copy(responseStatuses = request.responseStatuses + newResponseStatus)
                     requestsDao.insertRequest(updatedRequest.mapToRequestsEntity())
                     updatedRequest
                 }
@@ -47,9 +43,8 @@ class RequestsRepositoryImpl(
         // Firstly, executing first request to user's api
         val response = pingRepository.ping(request.httpRequestInfo)
         // Adding information about last server response
-        val updatedResponseStatusesList = request.responseStatuses.toMutableList()
-        updatedResponseStatusesList.add(response)
-        val completedRequestInfo = request.copy(responseStatuses = updatedResponseStatusesList)
+        val completedRequestInfo =
+            request.copy(responseStatuses = request.responseStatuses + response)
         // Saving
         requestsDao.insertRequest(completedRequestInfo.mapToRequestsEntity())
     }

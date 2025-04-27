@@ -28,14 +28,11 @@ import java.time.LocalDateTime
 @Composable
 fun ResponseStatusView(responseStatus: HttpResponseStatusModel?) {
     responseStatus?.statusCode?.let { responseStatusCodeSafe ->
-        val contentColor = if (responseStatusCodeSafe >= 500) {
-            colorResource(id = R.color.yellow)
-        } else if (responseStatusCodeSafe >= 400) {
-            colorResource(id = R.color.red)
-        } else if (responseStatusCodeSafe >= 300) {
-            colorResource(id = R.color.blue)
-        } else {
-            colorResource(id = R.color.green)
+        val contentColor = when (responseStatusCodeSafe) {
+            in 400..499 -> colorResource(R.color.red)
+            in 500..599 -> colorResource(R.color.yellow)
+            in 300..399 -> colorResource(R.color.blue)
+            else -> colorResource(R.color.green)
         }
 
         Row(

@@ -101,6 +101,12 @@ fun RequestView(
                 )
             }
         }
+        
+        if (request.responseStatuses.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(12.dp))
+
+            ResponseStatusesTimelineView(request.responseStatuses)
+        }
     }
 }
 

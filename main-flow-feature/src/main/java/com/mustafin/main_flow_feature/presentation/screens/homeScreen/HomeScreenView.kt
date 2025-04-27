@@ -48,8 +48,7 @@ fun HomeScreenView(
         viewModel.showConfirmDisableNotificationsDialog.collectAsStateWithLifecycle()
     val showConfirmDeleteRequestDialog =
         viewModel.showConfirmDeleteRequestDialog.collectAsStateWithLifecycle()
-
-
+    
     // Permission request window launcher
     val notificationPermissionRequestLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission(),

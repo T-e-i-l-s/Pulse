@@ -33,7 +33,12 @@ class PingWorker(
             coroutineScope {
                 requests.map { request ->
                     async {
-                        val updatedRequestEntity = checkAnService(request)
+                        var updatedRequestEntity = checkAnService(request)
+
+                        if (updatedRequestEntity.lastResponseStatus == null) {
+                            // Trying again to be sure that smth is really wrong
+                            updatedRequestEntity = checkAnService(request)
+                        }
 
                         val statusCode = updatedRequestEntity.lastResponseStatus?.statusCode
                         if (

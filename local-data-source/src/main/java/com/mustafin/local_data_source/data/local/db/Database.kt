@@ -9,7 +9,7 @@ import com.mustafin.local_data_source.data.local.typeConverters.HttpRequestConve
 import com.mustafin.local_data_source.data.local.typeConverters.ResponseStatusConverters
 
 /* Main database of this app */
-@Database(entities = [RequestsEntity::class], version = 1)
+@Database(entities = [RequestsEntity::class], version = 2)
 @TypeConverters(
     HttpRequestConverters::class,
     ResponseStatusConverters::class

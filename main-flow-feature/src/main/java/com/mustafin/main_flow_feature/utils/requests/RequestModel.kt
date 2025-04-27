@@ -9,6 +9,6 @@ data class RequestModel(
     val title: String,
     val description: String,
     val httpRequestInfo: HttpRequestModel,
-    val lastResponseStatus: HttpResponseStatusModel? = null,
+    val responseStatuses: List<HttpResponseStatusModel?> = emptyList(),
     val notificationsEnabled: Boolean = true
 )

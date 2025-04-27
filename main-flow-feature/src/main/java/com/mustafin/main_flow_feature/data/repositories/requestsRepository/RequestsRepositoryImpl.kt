@@ -21,10 +21,15 @@ class RequestsRepositoryImpl(
     override suspend fun updateResponseStatuses(requests: List<RequestModel>): List<RequestModel> {
         // Asynchronously executing all requests and saving new response statuses
         return coroutineScope {
-            requests.map {
+            requests.map { request ->
                 async {
-                    val newResponseStatus = pingRepository.ping(it.httpRequestInfo)
-                    val updatedRequest = it.copy(lastResponseStatus = newResponseStatus)
+                    val newResponseStatus = pingRepository.ping(request.httpRequestInfo)
+
+                    val updatedResponseStatusesList = request.responseStatuses.toMutableList()
+                    updatedResponseStatusesList.add(newResponseStatus)
+
+                    val updatedRequest =
+                        request.copy(responseStatuses = updatedResponseStatusesList)
                     requestsDao.insertRequest(updatedRequest.mapToRequestsEntity())
                     updatedRequest
                 }
@@ -42,7 +47,9 @@ class RequestsRepositoryImpl(
         // Firstly, executing first request to user's api
         val response = pingRepository.ping(request.httpRequestInfo)
         // Adding information about last server response
-        val completedRequestInfo = request.copy(lastResponseStatus = response)
+        val updatedResponseStatusesList = request.responseStatuses.toMutableList()
+        updatedResponseStatusesList.add(response)
+        val completedRequestInfo = request.copy(responseStatuses = updatedResponseStatusesList)
         // Saving
         requestsDao.insertRequest(completedRequestInfo.mapToRequestsEntity())
     }

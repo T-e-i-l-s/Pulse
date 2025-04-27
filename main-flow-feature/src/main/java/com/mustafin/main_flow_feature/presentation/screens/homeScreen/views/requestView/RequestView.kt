@@ -25,6 +25,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mustafin.main_flow_feature.R
 import com.mustafin.main_flow_feature.utils.requests.RequestModel
+import com.mustafin.ping_feature.utils.http.HttpMethod
+import com.mustafin.ping_feature.utils.http.HttpRequestModel
+import com.mustafin.ping_feature.utils.http.HttpResponseStatusModel
 import java.time.LocalDateTime
 
 /* Composable of view with information about the request */
@@ -42,7 +45,7 @@ fun RequestView(
             .background(colorResource(id = R.color.secondary_background))
             .padding(12.dp)
     ) {
-        ResponseStatusView(request.lastResponseStatus)
+        ResponseStatusView(request.responseStatuses.last())
 
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -109,14 +112,16 @@ private fun Preview() {
             id = 1,
             title = "Schedule Api",
             description = "Api with my daily schedule",
-            httpRequestInfo = com.mustafin.ping_feature.utils.http.HttpRequestModel(
+            httpRequestInfo = HttpRequestModel(
                 "https://test.test",
-                com.mustafin.ping_feature.utils.http.HttpMethod.GET
+                HttpMethod.GET
             ),
-            lastResponseStatus = com.mustafin.ping_feature.utils.http.HttpResponseStatusModel(
-                200,
-                "OK",
-                LocalDateTime.now()
+            responseStatuses = listOf(
+                HttpResponseStatusModel(
+                    200,
+                    "OK",
+                    LocalDateTime.now()
+                )
             )
         ),
         deleteRequest = {},

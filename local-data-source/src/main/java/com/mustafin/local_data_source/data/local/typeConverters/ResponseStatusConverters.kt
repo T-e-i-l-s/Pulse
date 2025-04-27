@@ -11,13 +11,13 @@ class ResponseStatusConverters {
     private val gson: Gson by inject(Gson::class.java)
 
     @TypeConverter
-    fun fromResponseStatusesList(responseStatus: List<HttpResponseStatusModel>?): String {
+    fun fromResponseStatusesList(responseStatus: List<HttpResponseStatusModel?>?): String {
         return gson.toJson(responseStatus)
     }
 
     @TypeConverter
-    fun toResponseStatusesList(value: String): List<HttpResponseStatusModel>? {
-        val type = object : TypeToken<List<HttpResponseStatusModel>?>() {}.type
+    fun toResponseStatusesList(value: String): List<HttpResponseStatusModel?>? {
+        val type = object : TypeToken<List<HttpResponseStatusModel?>?>() {}.type
         return gson.fromJson(value, type)
     }
 }

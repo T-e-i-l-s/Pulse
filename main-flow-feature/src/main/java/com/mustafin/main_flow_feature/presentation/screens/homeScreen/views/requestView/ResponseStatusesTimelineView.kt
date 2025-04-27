@@ -27,12 +27,20 @@ fun ResponseStatusesTimelineView(responseStatusesList: List<HttpResponseStatusMo
             .height(10.dp),
         horizontalArrangement = Arrangement.spacedBy(2.dp)
     ) {
-        responseStatusesList.takeLast(50).forEach { responseStatus ->
-            val color = when (responseStatus?.statusCode) {
-                null, in 400..499 -> colorResource(R.color.red)
-                in 500..599 -> colorResource(R.color.yellow)
-                in 300..399 -> colorResource(R.color.blue)
-                else -> colorResource(R.color.green)
+        val timelineStepsCount = 50
+
+        for (i in 1..timelineStepsCount) {
+            val color = if (i > timelineStepsCount - responseStatusesList.size) {
+                val sectionIndex = i - (timelineStepsCount - responseStatusesList.size) - 1
+                val responseStatus = responseStatusesList[sectionIndex]
+                when (responseStatus?.statusCode) {
+                    null, in 400..499 -> colorResource(R.color.red)
+                    in 500..599 -> colorResource(R.color.yellow)
+                    in 300..399 -> colorResource(R.color.blue)
+                    else -> colorResource(R.color.green)
+                }
+            } else {
+                colorResource(R.color.ternary_background)
             }
 
             Spacer(

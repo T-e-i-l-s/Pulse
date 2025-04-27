@@ -47,7 +47,6 @@ fun ResponseStatusView(responseStatus: HttpResponseStatusModel?) {
                 color = colorResource(id = R.color.gray),
                 modifier = Modifier.weight(1f)
             )
-
             Spacer(modifier = Modifier.width(8.dp))
             Row(
                 modifier = Modifier

@@ -45,7 +45,9 @@ fun RequestView(
             .background(colorResource(id = R.color.secondary_background))
             .padding(12.dp)
     ) {
-        ResponseStatusView(request.responseStatuses.last())
+        if (request.responseStatuses.isNotEmpty()) {
+            ResponseStatusView(request.responseStatuses.last())
+        }
 
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -101,7 +103,7 @@ fun RequestView(
                 )
             }
         }
-        
+
         if (request.responseStatuses.isNotEmpty()) {
             Spacer(modifier = Modifier.height(12.dp))
 

@@ -3,7 +3,7 @@
     <!-- Main Colors -->
     <color name="background">#E2E2E2</color>
     <color name="secondary_background">#E9E9E9</color>
-    <color name="ternary_background">#FFFFFF</color>
+    <color name="ternary_background">#F2F2F2</color>
     <color name="content">#000000</color>
 
     <!-- Additional Colors -->

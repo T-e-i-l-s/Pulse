@@ -1,7 +1,7 @@
 package com.mustafin.local_data_source.data.local.typeConverters
 
 import androidx.room.TypeConverter
-import com.mustafin.ping_feature.utils.http.HttpResponseStatusModel
+import com.mustafin.core.utils.http.HttpResponseStatusModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -11,7 +11,7 @@ class ResponseStatusConverters {
     private val dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
 
     @TypeConverter
-    fun fromResponseStatusesList(responseStatus: List<HttpResponseStatusModel?>?): String {
+    fun fromResponseStatusesList(responseStatus: List<com.mustafin.core.utils.http.HttpResponseStatusModel?>?): String {
         return responseStatus?.joinToString(separator = ",") { responseStatusModel ->
             responseStatusModel?.let {
                 "${it.statusCode ?: ""}$separator${it.message ?: ""}$separator${
@@ -22,7 +22,7 @@ class ResponseStatusConverters {
     }
 
     @TypeConverter
-    fun toResponseStatusesList(value: String): List<HttpResponseStatusModel?>? {
+    fun toResponseStatusesList(value: String): List<com.mustafin.core.utils.http.HttpResponseStatusModel?>? {
         if (value.isEmpty()) return null
 
         return value.split(",").mapNotNull { item ->
@@ -31,7 +31,7 @@ class ResponseStatusConverters {
                 val statusCode = parts[0].toIntOrNull()
                 val message = parts[1].takeIf { it.isNotEmpty() }
                 val updatedAt = LocalDateTime.parse(parts[2], dateTimeFormatter)
-                HttpResponseStatusModel(statusCode, message, updatedAt)
+                com.mustafin.core.utils.http.HttpResponseStatusModel(statusCode, message, updatedAt)
             } else {
                 null
             }

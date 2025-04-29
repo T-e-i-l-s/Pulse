@@ -4,8 +4,8 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import com.mustafin.ping_feature.utils.http.HttpMethod
-import com.mustafin.ping_feature.utils.http.HttpRequestModel
+import com.mustafin.core.utils.http.HttpMethod
+import com.mustafin.core.utils.http.HttpRequestModel
 import org.koin.java.KoinJavaComponent.inject
 
 /* Room converters for HttpRequestModel class */
@@ -13,7 +13,7 @@ class HttpRequestConverters {
     private val gson: Gson by inject(Gson::class.java)
 
     @TypeConverter
-    fun fromHttpRequestModel(model: com.mustafin.ping_feature.utils.http.HttpRequestModel): String {
+    fun fromHttpRequestModel(model: com.mustafin.core.utils.http.HttpRequestModel): String {
         val jsonObject = JsonObject()
         jsonObject.addProperty("url", model.url)
         jsonObject.addProperty("httpMethod", model.httpMethod::class.java.simpleName)
@@ -21,16 +21,16 @@ class HttpRequestConverters {
     }
 
     @TypeConverter
-    fun toHttpRequestModel(jsonString: String): com.mustafin.ping_feature.utils.http.HttpRequestModel {
+    fun toHttpRequestModel(jsonString: String): com.mustafin.core.utils.http.HttpRequestModel {
         val jsonObject = JsonParser.parseString(jsonString).asJsonObject
         val url = jsonObject.get("url").asString
         val httpMethod = when (jsonObject.get("httpMethod").asString) {
-            "GET" -> com.mustafin.ping_feature.utils.http.HttpMethod.GET
-            "POST" -> com.mustafin.ping_feature.utils.http.HttpMethod.POST
-            "DELETE" -> com.mustafin.ping_feature.utils.http.HttpMethod.DELETE
-            "PUT" -> com.mustafin.ping_feature.utils.http.HttpMethod.PUT
-            else -> com.mustafin.ping_feature.utils.http.HttpMethod.PATCH
+            "GET" -> com.mustafin.core.utils.http.HttpMethod.GET
+            "POST" -> com.mustafin.core.utils.http.HttpMethod.POST
+            "DELETE" -> com.mustafin.core.utils.http.HttpMethod.DELETE
+            "PUT" -> com.mustafin.core.utils.http.HttpMethod.PUT
+            else -> com.mustafin.core.utils.http.HttpMethod.PATCH
         }
-        return com.mustafin.ping_feature.utils.http.HttpRequestModel(url, httpMethod)
+        return com.mustafin.core.utils.http.HttpRequestModel(url, httpMethod)
     }
 }

@@ -19,9 +19,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mustafin.core.utils.http.HttpResponseStatusModel
+import com.mustafin.core.utils.time.toSimpleTimeString
 import com.mustafin.main_flow_feature.R
-import com.mustafin.main_flow_feature.utils.time.toSimpleTimeString
-import com.mustafin.ping_feature.utils.http.HttpResponseStatusModel
 import java.time.LocalDateTime
 
 /* View with short information about server response status */

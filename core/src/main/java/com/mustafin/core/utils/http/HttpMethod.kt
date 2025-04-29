@@ -1,7 +1,6 @@
-package com.mustafin.ping_feature.utils.http
+package com.mustafin.core.utils.http
 
-import com.mustafin.ping_feature.R
-
+import com.mustafin.core.R
 
 /* All request methods, that enabled in the application */
 sealed class HttpMethod(val colorRes: Int) {

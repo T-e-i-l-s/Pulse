@@ -8,9 +8,9 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mustafin.core.utils.loading.LoadingState
+import com.mustafin.core.utils.requests.RequestModel
 import com.mustafin.main_flow_feature.data.repositories.requestsRepository.RequestsRepository
-import com.mustafin.main_flow_feature.utils.loading.LoadingState
-import com.mustafin.main_flow_feature.utils.requests.RequestModel
 import com.mustafin.ui_components.presentation.vibration.CustomVibrationManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,14 +22,16 @@ class HomeScreenViewModel(
     private val vibrationManager: CustomVibrationManager,
     private val requestsRepository: RequestsRepository
 ) : ViewModel() {
-    private val _loadingState = MutableStateFlow(LoadingState.LOADING)
-    val loadingState: StateFlow<LoadingState> = _loadingState
+    private val _loadingState =
+        MutableStateFlow(com.mustafin.core.utils.loading.LoadingState.LOADING)
+    val loadingState: StateFlow<com.mustafin.core.utils.loading.LoadingState> = _loadingState
 
     private val _notificationPermissionWasGranted = MutableStateFlow<Boolean?>(null)
     val notificationPermissionWasGranted: StateFlow<Boolean?> = _notificationPermissionWasGranted
 
-    private val _requests = MutableStateFlow<List<RequestModel>>(emptyList())
-    val requests: StateFlow<List<RequestModel>> = _requests
+    private val _requests =
+        MutableStateFlow<List<com.mustafin.core.utils.requests.RequestModel>>(emptyList())
+    val requests: StateFlow<List<com.mustafin.core.utils.requests.RequestModel>> = _requests
 
     init {
         loadData()
@@ -37,7 +39,7 @@ class HomeScreenViewModel(
 
     private fun loadData() {
         viewModelScope.launch {
-            _loadingState.value = LoadingState.LOADING
+            _loadingState.value = com.mustafin.core.utils.loading.LoadingState.LOADING
             _requests.value = requestsRepository.getListOfRequests()
             updateData()
         }
@@ -45,9 +47,9 @@ class HomeScreenViewModel(
 
     fun updateData() {
         viewModelScope.launch {
-            _loadingState.value = LoadingState.UPDATING
+            _loadingState.value = com.mustafin.core.utils.loading.LoadingState.UPDATING
             _requests.value = requestsRepository.updateResponseStatuses(requests.value)
-            _loadingState.value = LoadingState.LOADED
+            _loadingState.value = com.mustafin.core.utils.loading.LoadingState.LOADED
         }
     }
 

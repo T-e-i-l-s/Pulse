@@ -19,13 +19,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.mustafin.core.utils.loading.LoadingState
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.HomeScreenHeaderView
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.HomeScreenPullToRefreshBox
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.NotificationsAreNotPermitted
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.alerts.DeleteRequestAlert
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.alerts.DisableNotificationsAlert
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.homeScreenRequestsList
-import com.mustafin.main_flow_feature.utils.loading.LoadingState
 import com.mustafin.ui_components.presentation.vibration.CustomVibrationManager
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -48,7 +48,7 @@ fun HomeScreenView(
         viewModel.showConfirmDisableNotificationsDialog.collectAsStateWithLifecycle()
     val showConfirmDeleteRequestDialog =
         viewModel.showConfirmDeleteRequestDialog.collectAsStateWithLifecycle()
-    
+
     // Permission request window launcher
     val notificationPermissionRequestLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission(),
@@ -73,8 +73,8 @@ fun HomeScreenView(
 
     HomeScreenPullToRefreshBox(
         isRefreshing = loadingState.value in listOf(
-            LoadingState.LOADING,
-            LoadingState.UPDATING
+            com.mustafin.core.utils.loading.LoadingState.LOADING,
+            com.mustafin.core.utils.loading.LoadingState.UPDATING
         ),
         onRefresh = {
             vibrationManager.shortDoubleVibration()

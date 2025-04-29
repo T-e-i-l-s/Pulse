@@ -23,17 +23,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mustafin.core.utils.http.HttpMethod
+import com.mustafin.core.utils.http.HttpRequestModel
+import com.mustafin.core.utils.http.HttpResponseStatusModel
 import com.mustafin.main_flow_feature.R
-import com.mustafin.main_flow_feature.utils.requests.RequestModel
-import com.mustafin.ping_feature.utils.http.HttpMethod
-import com.mustafin.ping_feature.utils.http.HttpRequestModel
-import com.mustafin.ping_feature.utils.http.HttpResponseStatusModel
 import java.time.LocalDateTime
 
 /* Composable of view with information about the request */
 @Composable
 fun RequestView(
-    request: RequestModel,
+    request: com.mustafin.core.utils.requests.RequestModel,
     deleteRequest: () -> Unit,
     toggleRequestNotifications: () -> Unit
 ) {
@@ -116,7 +115,7 @@ fun RequestView(
 @Preview
 private fun Preview() {
     RequestView(
-        request = RequestModel(
+        request = com.mustafin.core.utils.requests.RequestModel(
             id = 1,
             title = "Schedule Api",
             description = "Api with my daily schedule",

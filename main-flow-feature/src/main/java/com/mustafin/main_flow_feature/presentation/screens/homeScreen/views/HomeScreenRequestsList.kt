@@ -11,16 +11,16 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.mustafin.core.utils.loading.LoadingState
+import com.mustafin.core.utils.requests.RequestModel
 import com.mustafin.main_flow_feature.R
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.requestView.RequestView
 import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.skeletons.RequestViewSkeleton
-import com.mustafin.main_flow_feature.utils.loading.LoadingState
-import com.mustafin.main_flow_feature.utils.requests.RequestModel
 
 /* List of requests created for home screen */
 fun LazyListScope.homeScreenRequestsList(
-    loadingState: LoadingState,
-    requests: List<RequestModel>,
+    loadingState: com.mustafin.core.utils.loading.LoadingState,
+    requests: List<com.mustafin.core.utils.requests.RequestModel>,
     deleteRequest: (Int) -> Unit,
     toggleRequestNotifications: (Int) -> Unit
 ) {
@@ -39,7 +39,7 @@ fun LazyListScope.homeScreenRequestsList(
     }
 
     when (loadingState) {
-        LoadingState.LOADING -> {
+        com.mustafin.core.utils.loading.LoadingState.LOADING -> {
             items(4) {
                 RequestViewSkeleton()
             }

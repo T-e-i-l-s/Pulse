@@ -2,10 +2,10 @@ package com.mustafin.main_flow_feature.presentation.screens.addRequestScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mustafin.core.utils.http.HttpMethod
+import com.mustafin.core.utils.http.HttpRequestModel
 import com.mustafin.main_flow_feature.data.repositories.requestsRepository.RequestsRepository
 import com.mustafin.main_flow_feature.domain.validators.RequestUrlValidator
-import com.mustafin.main_flow_feature.utils.requests.RequestModel
-import com.mustafin.ping_feature.utils.http.HttpMethod
 import com.mustafin.ui_components.presentation.vibration.CustomVibrationManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -87,10 +87,10 @@ class AddRequestScreenViewModel(
 
             selectedRequestMethod.value?.let { requestMethodSafe ->
                 requestsRepository.addRequest(
-                    RequestModel(
+                    com.mustafin.core.utils.requests.RequestModel(
                         title = title.value,
                         description = description.value,
-                        httpRequestInfo = com.mustafin.ping_feature.utils.http.HttpRequestModel(
+                        httpRequestInfo = HttpRequestModel(
                             url = requestUrl.value,
                             httpMethod = requestMethodSafe
                         ),

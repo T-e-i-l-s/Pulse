@@ -1,9 +1,9 @@
 package com.mustafin.main_flow_feature.data.repositories.requestsRepository
 
+import com.mustafin.core.utils.requests.RequestModel
 import com.mustafin.local_data_source.data.local.requestsSource.RequestsDao
-import com.mustafin.main_flow_feature.data.mappers.mapToRequestModel
-import com.mustafin.main_flow_feature.data.mappers.mapToRequestsEntity
-import com.mustafin.main_flow_feature.utils.requests.RequestModel
+import com.mustafin.local_data_source.data.mappers.mapToRequestModel
+import com.mustafin.local_data_source.data.mappers.mapToRequestsEntity
 import com.mustafin.ping_feature.data.repositories.pingRepository.PingRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -23,10 +23,9 @@ class RequestsRepositoryImpl(
         return coroutineScope {
             requests.map { request ->
                 async {
-                    val newResponseStatus = pingRepository.ping(request.httpRequestInfo)
+                    val newResponseStatus = pingRepository.ping(request)
                     val updatedRequest =
                         request.copy(responseStatuses = request.responseStatuses + newResponseStatus)
-                    requestsDao.insertRequest(updatedRequest.mapToRequestsEntity())
                     updatedRequest
                 }
             }.awaitAll()
@@ -40,13 +39,7 @@ class RequestsRepositoryImpl(
     }
 
     override suspend fun addRequest(request: RequestModel) {
-        // Firstly, executing first request to user's api
-        val response = pingRepository.ping(request.httpRequestInfo)
-        // Adding information about last server response
-        val completedRequestInfo =
-            request.copy(responseStatuses = request.responseStatuses + response)
-        // Saving
-        requestsDao.insertRequest(completedRequestInfo.mapToRequestsEntity())
+        pingRepository.ping(request)
     }
 
     override suspend fun deleteRequest(requestId: Int) {

@@ -33,6 +33,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":core"))
+    implementation(project("::local-data-source"))
+
     // Koin DI
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)

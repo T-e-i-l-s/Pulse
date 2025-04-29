@@ -1,4 +1,4 @@
-package com.mustafin.main_flow_feature.utils.time
+package com.mustafin.core.utils.time
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

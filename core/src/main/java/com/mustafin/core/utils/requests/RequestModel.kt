@@ -1,7 +1,8 @@
-package com.mustafin.main_flow_feature.utils.requests
+package com.mustafin.core.utils.requests
 
-import com.mustafin.ping_feature.utils.http.HttpRequestModel
-import com.mustafin.ping_feature.utils.http.HttpResponseStatusModel
+import com.mustafin.core.utils.http.HttpRequestModel
+import com.mustafin.core.utils.http.HttpResponseStatusModel
+
 
 /* Model of а request provided by user */
 data class RequestModel(

@@ -3,12 +3,13 @@ package com.mustafin.background_checks_feature.data.workManager.workers
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.mustafin.core.utils.http.HttpResponseStatusModel
+import com.mustafin.core.utils.requests.RequestModel
 import com.mustafin.local_data_source.data.local.requestsSource.RequestsDao
-import com.mustafin.local_data_source.data.local.requestsSource.RequestsEntity
+import com.mustafin.local_data_source.data.mappers.mapToRequestModel
 import com.mustafin.notifications_feature.presentation.notifications.errorNotification.ErrorNotification
 import com.mustafin.notifications_feature.utils.error.ErrorNotificationModel
 import com.mustafin.ping_feature.data.repositories.pingRepository.PingRepository
-import com.mustafin.ping_feature.utils.http.HttpResponseStatusModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -32,22 +33,16 @@ class PingWorker(
             val errors = mutableListOf<ErrorNotificationModel>()
 
             coroutineScope {
-                requests.map { request ->
+                requests.map { entity ->
                     async {
+                        val request = entity.mapToRequestModel()
+
                         var updatedResponseStatus = checkAnService(request)
 
                         if (updatedResponseStatus == null) {
                             // Trying again to be sure that smth is really wrong
                             updatedResponseStatus = checkAnService(request)
                         }
-
-                        val updatedResponseStatusesList = request.responseStatuses.toMutableList()
-                        updatedResponseStatusesList.add(updatedResponseStatus)
-                        val updatedRequest =
-                            request.copy(responseStatuses = updatedResponseStatusesList)
-
-                        // Updating values in cache
-                        requestsDao.insertRequest(updatedRequest)
 
                         val lastResponseStatus = updatedResponseStatus
                         val statusCode = lastResponseStatus?.statusCode
@@ -70,6 +65,6 @@ class PingWorker(
         return Result.success()
     }
 
-    private suspend fun checkAnService(request: RequestsEntity): HttpResponseStatusModel? =
-        pingRepository.ping(request.httpRequestInfo)
+    private suspend fun checkAnService(request: RequestModel): HttpResponseStatusModel? =
+        pingRepository.ping(request)
 }

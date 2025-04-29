@@ -1,4 +1,4 @@
-package com.mustafin.main_flow_feature.utils.loading
+package com.mustafin.core.utils.loading
 
 /* Enum with all steps of loading */
 enum class LoadingState {

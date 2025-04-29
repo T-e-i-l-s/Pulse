@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core"))
     implementation(project(":ping-feature"))
     implementation(project(":local-data-source"))
     implementation(project(":notifications-feature"))

@@ -19,8 +19,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mustafin.core.utils.http.HttpMethod
 import com.mustafin.main_flow_feature.R
-import com.mustafin.ping_feature.utils.http.HttpMethod
 
 /* Composable for displaying the HTTP request method (e.g., GET, POST, etc.) */
 @Composable

@@ -1,6 +1,6 @@
 package com.mustafin.ping_feature.data.mappers
 
-import com.mustafin.ping_feature.utils.http.HttpMethod
+import com.mustafin.core.utils.http.HttpMethod
 
 fun HttpMethod.mapToKtorHttpMethod(): io.ktor.http.HttpMethod {
     return when (this) {

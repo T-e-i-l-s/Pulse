@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.mustafin.ping_feature.utils.http.HttpMethod
+import com.mustafin.core.utils.http.HttpMethod
 
 /* Composable for selecting an HTTP request method */
 @Composable

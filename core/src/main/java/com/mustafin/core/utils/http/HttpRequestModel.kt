@@ -1,4 +1,4 @@
-package com.mustafin.ping_feature.utils.http
+package com.mustafin.core.utils.http
 
 /* A data class containing everything necessary for executing an http request */
 data class HttpRequestModel(

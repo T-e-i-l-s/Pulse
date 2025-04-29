@@ -1,4 +1,4 @@
-package com.mustafin.ping_feature.utils.http
+package com.mustafin.core.utils.http
 
 import java.time.LocalDateTime
 

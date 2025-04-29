@@ -11,7 +11,7 @@ data class RequestsEntity(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val title: String,
     val description: String,
-    val httpRequestInfo: com.mustafin.core.utils.http.HttpRequestModel,
-    val responseStatuses: List<com.mustafin.core.utils.http.HttpResponseStatusModel?>,
+    val httpRequestInfo: HttpRequestModel,
+    val responseStatuses: List<HttpResponseStatusModel?>,
     val notificationsEnabled: Boolean
 )

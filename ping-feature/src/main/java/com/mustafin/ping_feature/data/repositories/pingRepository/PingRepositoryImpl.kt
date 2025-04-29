@@ -31,11 +31,10 @@ class PingRepositoryImpl(
             )
         }
 
-        val updatedResponseStatusesList = request.responseStatuses.toMutableList()
-        updatedResponseStatusesList.add(lastResponseStatus)
-        val updatedRequest =
-            request.copy(responseStatuses = updatedResponseStatusesList)
+        val updatedResponseStatusesList = request.responseStatuses + lastResponseStatus
+        val updatedRequest = request.copy(responseStatuses = updatedResponseStatusesList)
 
+        println(updatedRequest)
         // Updating values in cache
         requestsDao.insertRequest(updatedRequest.mapToRequestsEntity())
 

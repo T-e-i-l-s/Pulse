@@ -13,7 +13,7 @@ class HttpRequestConverters {
     private val gson: Gson by inject(Gson::class.java)
 
     @TypeConverter
-    fun fromHttpRequestModel(model: com.mustafin.core.utils.http.HttpRequestModel): String {
+    fun fromHttpRequestModel(model: HttpRequestModel): String {
         val jsonObject = JsonObject()
         jsonObject.addProperty("url", model.url)
         jsonObject.addProperty("httpMethod", model.httpMethod::class.java.simpleName)
@@ -21,16 +21,16 @@ class HttpRequestConverters {
     }
 
     @TypeConverter
-    fun toHttpRequestModel(jsonString: String): com.mustafin.core.utils.http.HttpRequestModel {
+    fun toHttpRequestModel(jsonString: String): HttpRequestModel {
         val jsonObject = JsonParser.parseString(jsonString).asJsonObject
         val url = jsonObject.get("url").asString
         val httpMethod = when (jsonObject.get("httpMethod").asString) {
-            "GET" -> com.mustafin.core.utils.http.HttpMethod.GET
-            "POST" -> com.mustafin.core.utils.http.HttpMethod.POST
-            "DELETE" -> com.mustafin.core.utils.http.HttpMethod.DELETE
-            "PUT" -> com.mustafin.core.utils.http.HttpMethod.PUT
-            else -> com.mustafin.core.utils.http.HttpMethod.PATCH
+            "GET" -> HttpMethod.GET
+            "POST" -> HttpMethod.POST
+            "DELETE" -> HttpMethod.DELETE
+            "PUT" -> HttpMethod.PUT
+            else -> HttpMethod.PATCH
         }
-        return com.mustafin.core.utils.http.HttpRequestModel(url, httpMethod)
+        return HttpRequestModel(url, httpMethod)
     }
 }

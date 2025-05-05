@@ -44,15 +44,14 @@ class PingWorker(
                             updatedResponseStatus = checkAnService(request)
                         }
 
-                        val lastResponseStatus = updatedResponseStatus
-                        val statusCode = lastResponseStatus?.statusCode
+                        val statusCode = updatedResponseStatus?.statusCode
                         if ((statusCode == null || statusCode >= 400) && request.notificationsEnabled) {
                             errors.add(
                                 ErrorNotificationModel(
-                                    request.httpRequestInfo.url,
-                                    request.httpRequestInfo.httpMethod.toString(),
-                                    lastResponseStatus?.statusCode,
-                                    lastResponseStatus?.message
+                                    url = request.httpRequestInfo.url,
+                                    requestMethod = request.httpRequestInfo.httpMethod.toString(),
+                                    statusCode = updatedResponseStatus?.statusCode,
+                                    message = updatedResponseStatus?.message
                                 )
                             )
                         }

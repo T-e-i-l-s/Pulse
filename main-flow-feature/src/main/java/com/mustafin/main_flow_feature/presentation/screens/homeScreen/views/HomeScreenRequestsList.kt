@@ -24,20 +24,6 @@ fun LazyListScope.homeScreenRequestsList(
     deleteRequest: (Int) -> Unit,
     toggleRequestNotifications: (Int) -> Unit
 ) {
-    if (requests.isEmpty()) {
-        item {
-            Text(
-                text = stringResource(id = R.string.empty_requests_list),
-                style = MaterialTheme.typography.labelMedium,
-                color = colorResource(id = R.color.gray),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp, vertical = 36.dp)
-            )
-        }
-    }
-
     when (loadingState) {
         LoadingState.LOADING -> {
             items(4) {
@@ -46,6 +32,20 @@ fun LazyListScope.homeScreenRequestsList(
         }
 
         else -> {
+            if (requests.isEmpty()) {
+                item {
+                    Text(
+                        text = stringResource(id = R.string.empty_requests_list),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = colorResource(id = R.color.gray),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 12.dp, vertical = 36.dp)
+                    )
+                }
+            }
+
             itemsIndexed(items = requests, key = { index, _ -> index }) { index, request ->
                 RequestView(
                     request = request,

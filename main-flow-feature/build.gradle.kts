@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.mustafin.main_flow_feature"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 26

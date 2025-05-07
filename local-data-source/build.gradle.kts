@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.mustafin.local_data_source"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 26

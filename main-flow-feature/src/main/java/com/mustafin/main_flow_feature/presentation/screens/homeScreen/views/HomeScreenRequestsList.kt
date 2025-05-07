@@ -19,8 +19,8 @@ import com.mustafin.main_flow_feature.presentation.screens.homeScreen.views.skel
 
 /* List of requests created for home screen */
 fun LazyListScope.homeScreenRequestsList(
-    loadingState: com.mustafin.core.utils.loading.LoadingState,
-    requests: List<com.mustafin.core.utils.requests.RequestModel>,
+    loadingState: LoadingState,
+    requests: List<RequestModel>,
     deleteRequest: (Int) -> Unit,
     toggleRequestNotifications: (Int) -> Unit
 ) {
@@ -39,7 +39,7 @@ fun LazyListScope.homeScreenRequestsList(
     }
 
     when (loadingState) {
-        com.mustafin.core.utils.loading.LoadingState.LOADING -> {
+        LoadingState.LOADING -> {
             items(4) {
                 RequestViewSkeleton()
             }

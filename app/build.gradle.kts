@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.mustafin.pulse"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.mustafin.pulse"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 2
         versionName = "1.1"
 

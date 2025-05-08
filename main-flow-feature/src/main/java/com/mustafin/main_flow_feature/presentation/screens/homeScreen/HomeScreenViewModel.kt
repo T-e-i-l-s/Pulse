@@ -23,15 +23,15 @@ class HomeScreenViewModel(
     private val requestsRepository: RequestsRepository
 ) : ViewModel() {
     private val _loadingState =
-        MutableStateFlow(com.mustafin.core.utils.loading.LoadingState.LOADING)
-    val loadingState: StateFlow<com.mustafin.core.utils.loading.LoadingState> = _loadingState
+        MutableStateFlow(LoadingState.LOADING)
+    val loadingState: StateFlow<LoadingState> = _loadingState
 
     private val _notificationPermissionWasGranted = MutableStateFlow<Boolean?>(null)
     val notificationPermissionWasGranted: StateFlow<Boolean?> = _notificationPermissionWasGranted
 
     private val _requests =
-        MutableStateFlow<List<com.mustafin.core.utils.requests.RequestModel>>(emptyList())
-    val requests: StateFlow<List<com.mustafin.core.utils.requests.RequestModel>> = _requests
+        MutableStateFlow<List<RequestModel>>(emptyList())
+    val requests: StateFlow<List<RequestModel>> = _requests
 
     init {
         loadData()
@@ -39,7 +39,7 @@ class HomeScreenViewModel(
 
     private fun loadData() {
         viewModelScope.launch {
-            _loadingState.value = com.mustafin.core.utils.loading.LoadingState.LOADING
+            _loadingState.value = LoadingState.LOADING
             _requests.value = requestsRepository.getListOfRequests()
             updateData()
         }
@@ -47,9 +47,9 @@ class HomeScreenViewModel(
 
     fun updateData() {
         viewModelScope.launch {
-            _loadingState.value = com.mustafin.core.utils.loading.LoadingState.UPDATING
+            _loadingState.value = LoadingState.UPDATING
             _requests.value = requestsRepository.updateResponseStatuses(requests.value)
-            _loadingState.value = com.mustafin.core.utils.loading.LoadingState.LOADED
+            _loadingState.value = LoadingState.LOADED
         }
     }
 

@@ -73,8 +73,8 @@ fun HomeScreenView(
 
     HomeScreenPullToRefreshBox(
         isRefreshing = loadingState.value in listOf(
-            com.mustafin.core.utils.loading.LoadingState.LOADING,
-            com.mustafin.core.utils.loading.LoadingState.UPDATING
+            LoadingState.LOADING,
+            LoadingState.UPDATING
         ),
         onRefresh = {
             vibrationManager.shortDoubleVibration()

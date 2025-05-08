@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mustafin.core.utils.http.HttpMethod
 import com.mustafin.core.utils.http.HttpRequestModel
+import com.mustafin.core.utils.requests.RequestModel
 import com.mustafin.main_flow_feature.data.repositories.requestsRepository.RequestsRepository
 import com.mustafin.main_flow_feature.domain.validators.RequestUrlValidator
 import com.mustafin.ui_components.presentation.vibration.CustomVibrationManager
@@ -87,7 +88,7 @@ class AddRequestScreenViewModel(
 
             selectedRequestMethod.value?.let { requestMethodSafe ->
                 requestsRepository.addRequest(
-                    com.mustafin.core.utils.requests.RequestModel(
+                    RequestModel(
                         title = title.value,
                         description = description.value,
                         httpRequestInfo = HttpRequestModel(

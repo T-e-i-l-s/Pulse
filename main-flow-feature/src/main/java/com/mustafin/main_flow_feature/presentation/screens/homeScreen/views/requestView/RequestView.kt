@@ -26,13 +26,14 @@ import androidx.compose.ui.unit.dp
 import com.mustafin.core.utils.http.HttpMethod
 import com.mustafin.core.utils.http.HttpRequestModel
 import com.mustafin.core.utils.http.HttpResponseStatusModel
+import com.mustafin.core.utils.requests.RequestModel
 import com.mustafin.main_flow_feature.R
 import java.time.LocalDateTime
 
 /* Composable of view with information about the request */
 @Composable
 fun RequestView(
-    request: com.mustafin.core.utils.requests.RequestModel,
+    request: RequestModel,
     deleteRequest: () -> Unit,
     toggleRequestNotifications: () -> Unit
 ) {
@@ -115,7 +116,7 @@ fun RequestView(
 @Preview
 private fun Preview() {
     RequestView(
-        request = com.mustafin.core.utils.requests.RequestModel(
+        request = RequestModel(
             id = 1,
             title = "Schedule Api",
             description = "Api with my daily schedule",

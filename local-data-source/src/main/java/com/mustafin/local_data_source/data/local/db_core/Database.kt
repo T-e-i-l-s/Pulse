@@ -1,4 +1,4 @@
-package com.mustafin.local_data_source.data.local.db
+package com.mustafin.local_data_source.data.local.db_core
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.mustafin.local_data_source.data.local.db.Tables
+import com.mustafin.local_data_source.data.local.db_core.Tables
 
 /* Dao-interface of requests table */
 @Dao

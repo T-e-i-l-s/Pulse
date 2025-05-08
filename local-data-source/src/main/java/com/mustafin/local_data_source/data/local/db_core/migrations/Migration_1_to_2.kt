@@ -1,8 +1,15 @@
-package com.mustafin.local_data_source.data.local.db.migrations
+package com.mustafin.local_data_source.data.local.db_core.migrations
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.mustafin.local_data_source.data.local.db.Tables
+import com.mustafin.local_data_source.data.local.db_core.Tables
+
+/*
+Migration from V1 to V2.
+What has changed:
+lastResponseStatus: HttpResponseStatusModel? -> responseStatuses : List<HttpResponseStatusModel?>
+The new structure helps to save all server statuses instead of the latest one and display their timeline.
+*/
 
 val MIGRATION_1_2 = object : Migration(1, 2) {
     override fun migrate(db: SupportSQLiteDatabase) {

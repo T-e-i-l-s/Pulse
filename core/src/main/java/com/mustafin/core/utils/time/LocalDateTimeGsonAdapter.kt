@@ -10,6 +10,8 @@ import java.lang.reflect.Type
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+/* Json adapter for LocalDateTime class */
+
 class LocalDateTimeGsonAdapter : JsonSerializer<LocalDateTime>, JsonDeserializer<LocalDateTime> {
     private val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
 

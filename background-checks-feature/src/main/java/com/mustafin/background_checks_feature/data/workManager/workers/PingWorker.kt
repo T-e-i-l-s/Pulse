@@ -32,29 +32,14 @@ class PingWorker(
             val requests = requestsDao.getAllRequests()
             val errors = mutableListOf<ErrorNotificationModel>()
 
+            /* Check all statuses asynchronously */
             coroutineScope {
-                requests.map { entity ->
+                requests.map { request ->
                     async {
-                        val request = entity.mapToRequestModel()
-
-                        var updatedResponseStatus = checkAnService(request)
-
-                        if (updatedResponseStatus == null) {
-                            // Trying again to be sure that smth is really wrong
-                            updatedResponseStatus = checkAnService(request)
-                        }
-
-                        val statusCode = updatedResponseStatus?.statusCode
-                        if ((statusCode == null || statusCode >= 400) && request.notificationsEnabled) {
-                            errors.add(
-                                ErrorNotificationModel(
-                                    url = request.httpRequestInfo.url,
-                                    requestMethod = request.httpRequestInfo.httpMethod.toString(),
-                                    statusCode = updatedResponseStatus?.statusCode,
-                                    message = updatedResponseStatus?.message
-                                )
-                            )
-                        }
+                        handleRequest(
+                            request = request.mapToRequestModel(),
+                            onError = errors::add
+                        )
                     }
                 }.awaitAll()
             }
@@ -64,6 +49,31 @@ class PingWorker(
         return Result.success()
     }
 
-    private suspend fun checkAnService(request: RequestModel): HttpResponseStatusModel? =
-        pingRepository.ping(request)
+    /* Function checks status of single service */
+    private suspend fun handleRequest(
+        request: RequestModel,
+        onError: (ErrorNotificationModel) -> Unit
+    ) {
+        suspend fun checkAnService(request: RequestModel) = pingRepository.ping(request)
+
+        var updatedResponseStatus = checkAnService(request)
+
+        if (updatedResponseStatus == null) {
+            // Trying again to be sure that smth is really wrong
+            updatedResponseStatus = checkAnService(request)
+        }
+
+        val statusCode = updatedResponseStatus?.statusCode
+        if ((statusCode == null || statusCode >= 400) && request.notificationsEnabled) {
+            onError(
+                ErrorNotificationModel(
+                    url = request.httpRequestInfo.url,
+                    requestMethod = request.httpRequestInfo.httpMethod.toString(),
+                    statusCode = updatedResponseStatus?.statusCode,
+                    message = updatedResponseStatus?.message
+                )
+            )
+        }
+    }
+
 }

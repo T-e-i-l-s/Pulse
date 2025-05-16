@@ -3,7 +3,6 @@ package com.mustafin.background_checks_feature.data.workManager.workers
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.mustafin.core.utils.http.HttpResponseStatusModel
 import com.mustafin.core.utils.requests.RequestModel
 import com.mustafin.local_data_source.data.local.requestsSource.RequestsDao
 import com.mustafin.local_data_source.data.mappers.mapToRequestModel
@@ -28,7 +27,7 @@ class PingWorker(
     private val errorNotification: ErrorNotification by inject(ErrorNotification::class.java)
 
     override fun doWork(): Result {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Default).launch {
             val requests = requestsDao.getAllRequests()
             val errors = mutableListOf<ErrorNotificationModel>()
 
